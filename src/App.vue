@@ -1,17 +1,31 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app color="theme" temporary>
-      <v-list dense>
-        <!-- news cards should go here -->
-        <v-list-item v-for="route in routes" :key="route.name" :to="route.path">
-          <v-list-item-action>
-            <v-icon>{{ route.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>{{ route.name }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      color="theme"
+      temporary
+      style="display:flex;flex-direction:column;"
+    >
+      <v-layout column fill-height>
+        <v-list dense>
+          <!-- news cards should go here -->
+          <v-list-item v-for="route in routes" :key="route.name" :to="route.path">
+            <v-list-item-action>
+              <v-icon>{{ route.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>{{ route.name }}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+
+        <v-spacer></v-spacer>
+        <!-- empty v-list to push the switch component down  -->
+        <v-list>
+        </v-list>
+        <v-switch class="pl-3 mt-auto" :label="`Dark Theme Toggle`" v-model="goDark"></v-switch>
+      </v-layout>
     </v-navigation-drawer>
 
     <v-app-bar app dense>
@@ -30,12 +44,6 @@
         <router-view />
       </v-container>
     </v-content>
-
-    <v-footer app class="px-2 py-0">
-      <span>&copy; 2019</span>
-      <v-spacer></v-spacer>
-      <v-switch :label="`Dark Theme`" v-model="goDark"></v-switch>
-    </v-footer>
   </v-app>
 </template>
 
@@ -52,9 +60,8 @@ export default {
     routes
   }),
   watch: {
-    goDark: function(newVal, oldVal) {
+    goDark: function(newVal) {
       this.$vuetify.theme.dark = newVal;
-      oldVal;
     }
   }
 };
