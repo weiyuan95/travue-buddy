@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app color="theme">
+    <v-navigation-drawer v-model="drawer" app color="theme" temporary>
       <v-list dense>
         <!-- news cards should go here -->
         <v-list-item v-for="route in routes" :key="route.name" :to="route.path">
