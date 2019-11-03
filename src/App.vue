@@ -35,7 +35,12 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <v-btn text>Login</v-btn>
+        <v-text-field
+            label="Solo"
+            @change="changeCurrentSearch"
+            single-line
+            solo
+        ></v-text-field>
       </v-toolbar-items>
     </v-app-bar>
 
@@ -48,8 +53,11 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 
 import { routes } from './routes.js';
+import store from "./store/store";
+import { CHANGE_CURRENT_SEARCH } from "./store/mutation-types"; 
 
 export default {
   name: "App",
@@ -59,6 +67,12 @@ export default {
     test: null,
     routes
   }),
+  methods: {
+    changeCurrentSearch: function(value) {
+      console.log('changed', value);
+      store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
+    }
+  },
   watch: {
     goDark: function(newVal) {
       this.$vuetify.theme.dark = newVal;

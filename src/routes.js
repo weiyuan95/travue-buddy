@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import Home from './components/home/Home.vue';
 import Dashboard from './components/dashboard/Dashboard.vue';
 import Planner from './components/planner/Planner.vue';
+import Playground from './components/Playground.vue';
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,12 @@ export const routes = [
     path: '/planner',
     name: 'Planner',
     component: Planner,
+    icon: 'mdi-calendar',
+  },
+  {
+    path: '/playground',
+    name: 'Playground',
+    component: Playground,
     icon: 'mdi-calendar',
   },
 ]

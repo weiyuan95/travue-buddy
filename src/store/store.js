@@ -1,10 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
-import { BUCKET_ADD_LOCATION, BUCKET_REMOVE_LOCATION } from './mutation-types';
+import { 
+  BUCKET_ADD_LOCATION, 
+  BUCKET_REMOVE_LOCATION, 
+  CHANGE_CURRENT_SEARCH 
+} from './mutation-types';
 
 export default new Vuex.Store({
   state: {
+    currentSearch: "", 
     bucket: [
       {
         rating: 5, safety: 5, costAccoms: 88.88, dailyCost: 48.88, timeSpent: 1,
@@ -34,6 +39,11 @@ export default new Vuex.Store({
   mutations: {
     // we can use the ES2015 computed property name feature
     // to use a constant as the function name
+
+    [CHANGE_CURRENT_SEARCH]: (state, { newSearchString }) => {
+      state.currentSearch = newSearchString;
+    },
+
     [BUCKET_ADD_LOCATION]: (state, { location }) => {
       if (state.bucket.find(x => x.name == location.name)) {
         return;
@@ -42,6 +52,6 @@ export default new Vuex.Store({
     },
     [BUCKET_REMOVE_LOCATION]: (state, { locationName }) => {
       state.bucket = state.bucket.filter(location => location.name !== locationName);
-    }
+    },
   }
 });
