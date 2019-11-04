@@ -24,7 +24,7 @@
           <NewsCard :newsArticles="newsArticles" />
         </v-col>
         <v-col cols="6">
-          <h1>Reviews</h1>
+          <ReviewsCard :reviews="reviews" />
         </v-col>
       </v-row>
     </v-container>
@@ -36,16 +36,18 @@
 import store from "../../store/store";
 import { getAllNews } from "../../api";
 import StatCard from "./StatCard.vue";
-import NewsCard from "./NewsCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
 import VideoFeature from "./VideoFeature.vue";
+import NewsCard from "./NewsCard.vue";
+import ReviewsCard from "./ReviewsCard.vue";
 
 export default {
   name: "Dashboard",
-  components: { StatCard, NewsCard, ImageCarousel, VideoFeature },
+  components: { StatCard, NewsCard, ImageCarousel, VideoFeature, ReviewsCard },
   data() {
     return {
       newsArticles: [],
+      reviews: [],
       // stats data to be repopulated with data from VueX
       stats: [
         {
@@ -97,7 +99,30 @@ export default {
   watch: {
     currentSearch() {
       getAllNews({ keyword: this.currentSearch })
-      .then(articles => this.newsArticles = articles); 
+      .then(articles => this.newsArticles = articles);
+
+      this.reviews = [
+        {
+          "author_name": "ChunKiat Ong",
+          "author_url": "https://www.google.com/maps/contrib/107867612598539418830/reviews",
+          "language": "en",
+          "profile_photo_url": "https://lh4.ggpht.com/-i1t_u2bipG4/AAAAAAAAAAI/AAAAAAAAAAA/T3uKSMWTRwM/s128-c0x00000000-cc-rp-mo/photo.jpg",
+          "rating": 5,
+          "relative_time_description": "a month ago",
+          "text": "Love the food and coffee! Lookout for the pull beef burger (Chef’s special)! Coupled with the home-made bread, its one of the better burgers i have had. Like the breakfast platter where i am able to mix and match. Particularly impress that they are willing to ‘customise’ my breakfast platter to have e scrambled eggs well done and unsalted. (For my 20mths old son, and together with the sourdough bread, makes a good breakfast for him!) Only goes to show that everything is prepared after order. Lastly, the cheesecake is a must try!",
+          "time": 1570107041
+        },
+        {
+          "author_name": "Lyn Chong",
+          "author_url": "https://www.google.com/maps/contrib/109544318011085924786/reviews",
+          "language": "en",
+          "profile_photo_url": "https://lh4.ggpht.com/-T4pwkqc_1L4/AAAAAAAAAAI/AAAAAAAAAAA/5jsVsWjTAd4/s128-c0x00000000-cc-rp-mo/photo.jpg",
+          "rating": 3,
+          "relative_time_description": "a week ago",
+          "text": "The Rose Tea Cake is brilliantly light and fragrant! Delicious.",
+          "time": 1572072705
+        }
+      ]
     }
   }
 }
