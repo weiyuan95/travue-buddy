@@ -28,13 +28,10 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-app-bar app dense>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Wanderlust</v-toolbar-title>
-
+    <v-toolbar color="transparent" min-width="100vw" absolute flat dense>
+      <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
       <v-spacer></v-spacer>
-
-      <v-toolbar-items>
+      <v-toolbar-items v-if="isNotHomePage">
         <v-text-field
             label="Solo"
             @change="changeCurrentSearch"
@@ -42,10 +39,10 @@
             solo
         ></v-text-field>
       </v-toolbar-items>
-    </v-app-bar>
+    </v-toolbar>
 
     <v-content>
-      <v-container fluid>
+      <v-container fluid class="pa-0 ma-0">
         <keep-alive include="Dashboard">
           <router-view />
         </keep-alive>
@@ -58,8 +55,9 @@
 /* eslint-disable no-console */
 
 import { routes } from './routes.js';
+import router from './routes.js'
 import store from "./store/store";
-import { CHANGE_CURRENT_SEARCH } from "./store/mutation-types"; 
+import { CHANGE_CURRENT_SEARCH } from "./store/mutation-types";
 
 export default {
   name: "App",
@@ -67,7 +65,8 @@ export default {
     drawer: false,
     goDark: false,
     test: null,
-    routes
+    routes,
+    router
   }),
   methods: {
     changeCurrentSearch: function(value) {
@@ -79,6 +78,29 @@ export default {
     goDark: function(newVal) {
       this.$vuetify.theme.dark = newVal;
     }
+  },
+  computed: {
+    isNotHomePage: function() {
+      return this.router.currentRoute.path !== "/"
+    }
   }
 };
 </script>
+
+<style>
+/* styles to hide the scrollbar */
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+      width: 0px;  /* Remove scrollbar space */
+      background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+  /* Optional: show position indicator in red */
+  ::-webkit-scrollbar-thumb {
+      background: #FF0000;
+  }
+/* styles to hide the scrollbar */
+</style>
