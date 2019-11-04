@@ -28,12 +28,9 @@
       </v-layout>
     </v-navigation-drawer>
 
-    <v-app-bar app dense>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Wanderlust</v-toolbar-title>
-
+    <v-toolbar color="transparent" min-width="100vw" absolute flat dense>
+      <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
       <v-spacer></v-spacer>
-
       <v-toolbar-items>
         <v-text-field
             label="Solo"
@@ -42,7 +39,7 @@
             solo
         ></v-text-field>
       </v-toolbar-items>
-    </v-app-bar>
+    </v-toolbar>
 
     <v-content>
       <v-container fluid>
@@ -82,3 +79,21 @@ export default {
   }
 };
 </script>
+
+<style>
+/* styles to hide the scrollbar */
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+    
+  ::-webkit-scrollbar {
+      width: 0px;  /* Remove scrollbar space */
+      background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+  /* Optional: show position indicator in red */
+  ::-webkit-scrollbar-thumb {
+      background: #FF0000;
+  }
+/* styles to hide the scrollbar */
+</style>
