@@ -3,13 +3,25 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 import { 
   BUCKET_ADD_LOCATION, 
-  BUCKET_REMOVE_LOCATION, 
-  CHANGE_CURRENT_SEARCH 
+  BUCKET_REMOVE_LOCATION,
+  CHANGE_CURRENT_SEARCH,
+  SET_LAST_LOCATION_NAME,
+  SET_LAST_LOCATION_IMG_URLS,
+  SET_LAST_LOCATION_YT_VID_URL,
+  SET_LAST_LOCATION_NEWS_ARTICLES,
+  SET_LAST_LOCATION_REVIEWS
 } from './mutation-types';
 
 export default new Vuex.Store({
   state: {
-    currentSearch: "", 
+    currentSearch: "",
+    
+    lastLocationName: '',
+    lastLocationImgUrls: ['https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAADmRc5FAuJjjZ4cZO8S7u44EtZDiv_FmJ91D-TD9Kdy7JZMC7cTXhyNf8PN1UeZnThMDsPik2hRF15ZBVttJoOlDc2cOpx5ACm-twHrUBMS35JDNJ0wQBDcSkQIBSHqqeEhBtvTNW-S8YzI2GsTz1tEluGhRS53Gkm92_Phmhd_DEe-dXjgTzuQ&key=AIzaSyBLMsG90Og6RJhX8yvZ-YLuLXhOiKVgrGI'],
+    lastLocationYtVideoURL: 'https://www.youtube.com/embed/xniDjNQtqyg',
+    lastLocationNewsArticles: [],
+    lastLocationReviews: [],
+
     bucket: [
       {
         rating: 5, safety: 5, costAccoms: 88.88, dailyCost: 48.88, timeSpent: 1,
@@ -65,8 +77,29 @@ export default new Vuex.Store({
       }
       state.bucket.push(location);
     },
+    
     [BUCKET_REMOVE_LOCATION]: (state, { locationName }) => {
       state.bucket = state.bucket.filter(location => location.name !== locationName);
+    },
+
+    [SET_LAST_LOCATION_NAME]: (state, { lastLocationName }) => {
+      state.lastLocationName = lastLocationName;
+    },
+
+    [SET_LAST_LOCATION_IMG_URLS]: (state, { lastLocationImgUrls }) => {
+      state.lastLocationImgUrls = lastLocationImgUrls;
+    },
+
+    [SET_LAST_LOCATION_YT_VID_URL]: (state, { lastLocationYtVideoURL }) => {
+      state.lastLocationYtVideoURL = lastLocationYtVideoURL;
+    },
+
+    [SET_LAST_LOCATION_NEWS_ARTICLES]: (state, { lastLocationNewsArticles }) => {
+      state.lastLocationNewsArticles = lastLocationNewsArticles;
+    },
+
+    [SET_LAST_LOCATION_REVIEWS]: (state, { lastLocationReviews }) => {
+      state.lastLocationReviews = lastLocationReviews;
     },
   }
 });
