@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import store from "../../store/store";
+import { CHANGE_CURRENT_SEARCH } from "../../store/mutation-types";
 import { required } from "vuelidate/lib/validators";
 import router from "../../routes";
 
@@ -45,7 +47,8 @@ export default {
   methods: {
     submit() {
       this.$v.$touch();
-      router.push("dashboard");
+      router.push("dashboard")
+      .then(() => store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: this.destination }))
     }
   }
 };
