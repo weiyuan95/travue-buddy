@@ -39,9 +39,7 @@ export default new Vuex.Store({
             "time": 1572072705
           }
         ],
-        ytUrls: [
-          { title: '', url: 'https://www.youtube.com/watch?v=xUhjFfFMo10' }
-        ],
+        ytVideoURL: 'https://www.youtube.com/watch?v=xUhjFfFMo10',
         news: [
           {
             "title": "Carbon emissions, PMDs, CPF and the Sentosa Merlion among issues to be discussed in Parliament",
