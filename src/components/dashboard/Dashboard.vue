@@ -37,6 +37,7 @@
 import store from "../../store/store";
 import { BUCKET_ADD_LOCATION } from '../../store/mutation-types';
 import { getAllNews } from "../../api";
+import { getCountryCode } from "../../api";
 
 import StatCard from "./StatCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
@@ -61,10 +62,11 @@ export default {
       ytVideoURL: 'https://www.youtube.com/embed/xniDjNQtqyg',
       newsArticles: [],
       reviews: [],
+      safetyRating: [],
       
       // stats data to be repopulated with data from VueX
-      stats: [
-        {
+      stats: {
+        "costPerDay": {
           id: "costPerDay",
           title: "Average Cost",
           subtitle: "Daily",
@@ -72,15 +74,15 @@ export default {
           icon: "mdi-currency-usd",
           color: "amber darken-3"
         },
-        {
+        "safetyRating": {
           id: "safetyRating",
-          subtitle: "Against 3",
+          subtitle: "Against 5 (Lower Better)",
           title: "Safety Rating",
           value: 1,
           icon: "mdi-alert",
           color: "red lighten-2"
         },
-        {
+         "rating": {
           id: "rating",
           subtitle: "Against 5",
           title: "Review Rating",
@@ -88,7 +90,7 @@ export default {
           icon: "mdi-message-draw",
           color: "indigo darken-1"
         },
-        {
+        "accomodationCost": {
           id: "accomodationCost",
           subtitle: "Daily (USD)",
           title: "Accom Cost",
@@ -96,7 +98,7 @@ export default {
           icon: "mdi-home",
           color: "cyan darken-1"
         },
-        {
+        "timeSpent": {
           id: "timeSpent",
           subtitle: "Average Hours",
           title: "Time Spent",
@@ -104,7 +106,7 @@ export default {
           icon: "mdi-timer",
           color: "grey darken-1"
         }
-      ]
+      }
     }
   },
 
@@ -150,6 +152,9 @@ export default {
       getAllNews({ keyword: this.currentSearch })
       .then(articles => this.newsArticles = articles)
       .then(() => this.newsComponentLoading = false);
+
+      // need to update to lat and long values from google place search
+      getCountryCode(1.3409, 103.7724).then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
 
       this.reviews = [
         {
