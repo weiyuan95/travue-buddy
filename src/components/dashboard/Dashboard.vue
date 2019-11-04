@@ -25,12 +25,12 @@
           <ReviewsCard :loading="reviewsComponentLoading" :reviews="reviews" />
         </v-col>
       </v-row>
-      <v-btn @click="addLocationToBucketList" color="green" dark large bottom right fab fixed>
+      <v-btn @click="addLocationToBucketList" color="#ff0266" dark large bottom right fab fixed>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
-      <v-snackbar color="green" top v-model="snackbar" :timeout="2000">
+      <v-snackbar class="font-weight-bold" color="secondary" top v-model="snackbar" :timeout="2000">
         Added to bucket list!
-        <v-btn color="grey" @click="snackbar = false" > X </v-btn>
+        <v-btn color="accent" @click="snackbar = false" > X </v-btn>
       </v-snackbar>
     </v-container>
   </div>
@@ -71,7 +71,7 @@ export default {
       reviews: [],
       safetyRating: [],
       places: [],
-      
+
       // stats data to be repopulated with data from VueX
       stats: {
         "costPerDay": {
@@ -135,7 +135,7 @@ export default {
       }
       store.commit(BUCKET_ADD_LOCATION, { location });
     },
-    
+
     updateData(places) {
       this.places = places;
       this.reviews = places.reviews;

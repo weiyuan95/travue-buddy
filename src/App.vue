@@ -22,24 +22,32 @@
 
         <v-spacer></v-spacer>
         <!-- empty v-list to push the switch component down  -->
-        <v-list>
-        </v-list>
+        <v-list></v-list>
         <v-switch class="pl-3 mt-auto" :label="`Dark Theme Toggle`" v-model="goDark"></v-switch>
       </v-layout>
     </v-navigation-drawer>
-
-    <v-toolbar color="transparent" min-width="100vw" absolute flat dense>
-      <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
-      <v-spacer></v-spacer>
-      <v-toolbar-items v-if="isNotHomePage">
-        <v-text-field
-            label="Solo"
-            @change="changeCurrentSearch"
-            single-line
-            solo
-        ></v-text-field>
-      </v-toolbar-items>
-    </v-toolbar>
+    <v-app-bar
+      :color="homePageColor"
+      :app="isNotHomePage"
+      :absolute="!isNotHomePage"
+      elevate-on-scroll
+    >
+      <v-row align="center">
+        <v-col>
+          <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
+        </v-col>
+        <v-spacer></v-spacer>
+        <v-col class="mt-8">
+          <v-toolbar-items v-if="isNotHomePage">
+          <v-text-field
+          label="Search another country"
+          @change="changeCurrentSearch"
+          solo
+          ></v-text-field>
+        </v-toolbar-items>
+        </v-col>
+      </v-row>
+    </v-app-bar>
 
     <v-content>
       <v-container fluid class="pa-0 ma-0">
@@ -54,8 +62,8 @@
 <script>
 /* eslint-disable no-console */
 
-import { routes } from './routes.js';
-import router from './routes.js'
+import { routes } from "./routes.js";
+import router from "./routes.js";
 import store from "./store/store";
 import { CHANGE_CURRENT_SEARCH } from "./store/mutation-types";
 
@@ -70,7 +78,6 @@ export default {
   }),
   methods: {
     changeCurrentSearch: function(value) {
-      console.log('changed', value);
       store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
     }
   },
@@ -81,7 +88,10 @@ export default {
   },
   computed: {
     isNotHomePage: function() {
-      return this.router.currentRoute.path !== "/"
+      return this.router.currentRoute.path !== "/";
+    },
+    homePageColor: function() {
+      return this.isNotHomePage ? "primary" : "transparent";
     }
   }
 };
@@ -89,18 +99,18 @@ export default {
 
 <style>
 /* styles to hide the scrollbar */
-  html {
-    overflow: scroll;
-    overflow-x: hidden;
-  }
+html {
+  overflow: scroll;
+  overflow-x: hidden;
+}
 
-  ::-webkit-scrollbar {
-      width: 0px;  /* Remove scrollbar space */
-      background: transparent;  /* Optional: just make scrollbar invisible */
-  }
-  /* Optional: show position indicator in red */
-  ::-webkit-scrollbar-thumb {
-      background: #FF0000;
-  }
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #ff0000;
+}
 /* styles to hide the scrollbar */
 </style>
