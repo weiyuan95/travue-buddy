@@ -13,18 +13,18 @@
       </v-row>
       <v-row>
         <v-col cols="6">
-          <ImageCarousel :imgStrings="['https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAADmRc5FAuJjjZ4cZO8S7u44EtZDiv_FmJ91D-TD9Kdy7JZMC7cTXhyNf8PN1UeZnThMDsPik2hRF15ZBVttJoOlDc2cOpx5ACm-twHrUBMS35JDNJ0wQBDcSkQIBSHqqeEhBtvTNW-S8YzI2GsTz1tEluGhRS53Gkm92_Phmhd_DEe-dXjgTzuQ&key=AIzaSyBLMsG90Og6RJhX8yvZ-YLuLXhOiKVgrGI']"/>
+          <ImageCarousel :loading="imgCarouselComponentLoading" :imgStrings="['https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAADmRc5FAuJjjZ4cZO8S7u44EtZDiv_FmJ91D-TD9Kdy7JZMC7cTXhyNf8PN1UeZnThMDsPik2hRF15ZBVttJoOlDc2cOpx5ACm-twHrUBMS35JDNJ0wQBDcSkQIBSHqqeEhBtvTNW-S8YzI2GsTz1tEluGhRS53Gkm92_Phmhd_DEe-dXjgTzuQ&key=AIzaSyBLMsG90Og6RJhX8yvZ-YLuLXhOiKVgrGI']"/>
         </v-col>
         <v-col cols="6">
-          <VideoFeature :link="'https://www.youtube.com/embed/xniDjNQtqyg'"/>
+          <VideoFeature :loading="vidFeatureComponentLoading" :link="'https://www.youtube.com/embed/xniDjNQtqyg'"/>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="6">
-          <NewsCard :newsArticles="newsArticles" />
+          <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
         </v-col>
         <v-col cols="6">
-          <ReviewsCard :reviews="reviews" />
+          <ReviewsCard :loading="reviewsComponentLoading" :reviews="reviews" />
         </v-col>
       </v-row>
     </v-container>
@@ -46,6 +46,12 @@ export default {
   components: { StatCard, NewsCard, ImageCarousel, VideoFeature, ReviewsCard },
   data() {
     return {
+
+      newsComponentLoading: true,
+      reviewsComponentLoading: true,
+      imgCarouselComponentLoading: true,
+      vidFeatureComponentLoading: true,
+
       newsArticles: [],
       reviews: [],
       // stats data to be repopulated with data from VueX
@@ -98,8 +104,24 @@ export default {
   },
   watch: {
     currentSearch() {
+      
+      this.newsComponentLoading = true;
+      this.imgCarouselComponentLoading = true;
+      this.reviewsComponentLoading = true;
+      this.vidFeatureComponentLoading = true;
+
+      // getAllImages()
+      setTimeout(() => this.imgCarouselComponentLoading = false, 500);
+      
+      // getAllReviews()
+      setTimeout(() => this.reviewsComponentLoading = false, 500);
+
+      // getAllVids()
+      setTimeout(() => this.vidFeatureComponentLoading = false, 500);
+
       getAllNews({ keyword: this.currentSearch })
-      .then(articles => this.newsArticles = articles);
+      .then(articles => this.newsArticles = articles)
+      .then(() => this.newsComponentLoading = false);
 
       this.reviews = [
         {

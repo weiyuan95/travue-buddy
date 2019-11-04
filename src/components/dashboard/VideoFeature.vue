@@ -1,12 +1,14 @@
 <template>
   <v-card class="main-wrapper" elevation="5">
-    <iframe width="100%" height="100%" :src="link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen/>
+    <v-skeleton-loader style="height: 100%;" :loading="loading" type="card" >
+      <iframe width="100%" height="100%" :src="link" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen/>
+    </v-skeleton-loader>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ['link']
+  props: ['link', 'loading']
 }
 </script>
 
@@ -14,7 +16,8 @@ export default {
 
 .main-wrapper {
   height: 400px; 
-  overflow: scroll;
+  overflow: hidden;
+  padding: 0px 0px 0px 0px;
 }
 
 </style>
