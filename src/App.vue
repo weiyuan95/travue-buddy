@@ -46,7 +46,9 @@
 
     <v-content>
       <v-container fluid>
-        <router-view />
+        <keep-alive include="Dashboard">
+          <router-view />
+        </keep-alive>
       </v-container>
     </v-content>
   </v-app>
