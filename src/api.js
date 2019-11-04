@@ -18,6 +18,17 @@ export async function getAllNews({ keyword }) {
 }
 
 
+export async function getPlacesDetails({ keyword }) {
+  let splitKeyword = keyword.split(" ");
+  let joinedKeyword = splitKeyword.join("%20");
+
+  const placesUrl = `https://travelvue-backend.herokuapp.com/places/${joinedKeyword}`;
+  let response = await fetch(placesUrl);
+  response = await response.json();
+
+  return response;
+}
+
 export async function getSafetyRating(countryCode) {
   countryCode = countryCode.toUpperCase();
   const tripSafetyUrl = `https://www.travel-advisory.info/api?countrycode=${countryCode}`

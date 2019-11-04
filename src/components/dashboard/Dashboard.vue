@@ -42,6 +42,7 @@ import store from "../../store/store";
 import { BUCKET_ADD_LOCATION } from '../../store/mutation-types';
 import { getAllNews } from "../../api";
 import { getCountryCode } from "../../api";
+import { getPlacesDetails } from "../../api";
 
 import StatCard from "./StatCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
@@ -69,6 +70,7 @@ export default {
       newsArticles: [],
       reviews: [],
       safetyRating: [],
+      places: [],
       
       // stats data to be repopulated with data from VueX
       stats: {
@@ -91,7 +93,7 @@ export default {
          "rating": {
           id: "rating",
           subtitle: "Against 5",
-          title: "Review Rating",
+          title: "Average Review",
           value: 4.5,
           icon: "mdi-message-draw",
           color: "indigo darken-1"
@@ -132,6 +134,15 @@ export default {
         news:       this.newsArticles
       }
       store.commit(BUCKET_ADD_LOCATION, { location });
+    },
+    
+    updateData(places) {
+      this.places = places;
+      this.reviews = places.reviews;
+      this.stats.rating.value = Math.round( places.rating * 10 ) / 10;
+
+      getCountryCode(places.location.lat, places.location.lng)
+      .then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
     }
   },
 
@@ -149,9 +160,6 @@ export default {
 
       // getAllImages()
       setTimeout(() => this.imgCarouselComponentLoading = false, 500);
-      
-      // getAllReviews()
-      setTimeout(() => this.reviewsComponentLoading = false, 500);
 
       // getAllVids()
       setTimeout(() => this.vidFeatureComponentLoading = false, 500);
@@ -160,31 +168,10 @@ export default {
       .then(articles => this.newsArticles = articles)
       .then(() => this.newsComponentLoading = false);
 
-      // need to update to lat and long values from google place search
-      getCountryCode(1.3409, 103.7724).then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
+      getPlacesDetails({ keyword: this.currentSearch})
+      .then(places => this.updateData(places))
+      .then(() => this.reviewsComponentLoading = false);
 
-      this.reviews = [
-        {
-          "author_name": "ChunKiat Ong",
-          "author_url": "https://www.google.com/maps/contrib/107867612598539418830/reviews",
-          "language": "en",
-          "profile_photo_url": "https://lh4.ggpht.com/-i1t_u2bipG4/AAAAAAAAAAI/AAAAAAAAAAA/T3uKSMWTRwM/s128-c0x00000000-cc-rp-mo/photo.jpg",
-          "rating": 5,
-          "relative_time_description": "a month ago",
-          "text": "Love the food and coffee! Lookout for the pull beef burger (Chef’s special)! Coupled with the home-made bread, its one of the better burgers i have had. Like the breakfast platter where i am able to mix and match. Particularly impress that they are willing to ‘customise’ my breakfast platter to have e scrambled eggs well done and unsalted. (For my 20mths old son, and together with the sourdough bread, makes a good breakfast for him!) Only goes to show that everything is prepared after order. Lastly, the cheesecake is a must try!",
-          "time": 1570107041
-        },
-        {
-          "author_name": "Lyn Chong",
-          "author_url": "https://www.google.com/maps/contrib/109544318011085924786/reviews",
-          "language": "en",
-          "profile_photo_url": "https://lh4.ggpht.com/-T4pwkqc_1L4/AAAAAAAAAAI/AAAAAAAAAAA/5jsVsWjTAd4/s128-c0x00000000-cc-rp-mo/photo.jpg",
-          "rating": 3,
-          "relative_time_description": "a week ago",
-          "text": "The Rose Tea Cake is brilliantly light and fragrant! Delicious.",
-          "time": 1572072705
-        }
-      ]
     }
   }
 }
