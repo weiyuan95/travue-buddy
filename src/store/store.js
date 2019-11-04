@@ -18,9 +18,26 @@ export default new Vuex.Store({
           'https://www.littledayout.com/wp-content/uploads/10-merlion-park.jpg'
         ],
         reviews: [
-          { title: 'best place', description: '...', rating: 5 },
-          { title: 'bestest place', description: '...', rating: 5 },
-          { title: 'bester place', description: '...', rating: 5 },
+          {
+            "author_name": "ChunKiat Ong",
+            "author_url": "https://www.google.com/maps/contrib/107867612598539418830/reviews",
+            "language": "en",
+            "profile_photo_url": "https://lh4.ggpht.com/-i1t_u2bipG4/AAAAAAAAAAI/AAAAAAAAAAA/T3uKSMWTRwM/s128-c0x00000000-cc-rp-mo/photo.jpg",
+            "rating": 5,
+            "relative_time_description": "a month ago",
+            "text": "Love the food and coffee! Lookout for the pull beef burger (Chef’s special)! Coupled with the home-made bread, its one of the better burgers i have had. Like the breakfast platter where i am able to mix and match. Particularly impress that they are willing to ‘customise’ my breakfast platter to have e scrambled eggs well done and unsalted. (For my 20mths old son, and together with the sourdough bread, makes a good breakfast for him!) Only goes to show that everything is prepared after order. Lastly, the cheesecake is a must try!",
+            "time": 1570107041
+          },
+          {
+            "author_name": "Lyn Chong",
+            "author_url": "https://www.google.com/maps/contrib/109544318011085924786/reviews",
+            "language": "en",
+            "profile_photo_url": "https://lh4.ggpht.com/-T4pwkqc_1L4/AAAAAAAAAAI/AAAAAAAAAAA/5jsVsWjTAd4/s128-c0x00000000-cc-rp-mo/photo.jpg",
+            "rating": 5,
+            "relative_time_description": "a week ago",
+            "text": "The Rose Tea Cake is brilliantly light and fragrant! Delicious.",
+            "time": 1572072705
+          }
         ],
         ytUrls: [
           { title: '', url: 'https://www.youtube.com/watch?v=xUhjFfFMo10' }
