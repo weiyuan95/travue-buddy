@@ -15,6 +15,9 @@
         <v-col cols="6">
           <ImageCarousel :imgStrings="['https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAADmRc5FAuJjjZ4cZO8S7u44EtZDiv_FmJ91D-TD9Kdy7JZMC7cTXhyNf8PN1UeZnThMDsPik2hRF15ZBVttJoOlDc2cOpx5ACm-twHrUBMS35JDNJ0wQBDcSkQIBSHqqeEhBtvTNW-S8YzI2GsTz1tEluGhRS53Gkm92_Phmhd_DEe-dXjgTzuQ&key=AIzaSyBLMsG90Og6RJhX8yvZ-YLuLXhOiKVgrGI']"/>
         </v-col>
+        <v-col cols="6">
+          <VideoFeature :link="'https://www.youtube.com/embed/xniDjNQtqyg'"/>
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="6">
@@ -31,15 +34,15 @@
 <script>
 /* eslint-disable no-console */
 import store from "../../store/store";
-// import { CHANGE_CURRENT_SEARCH } from "../../store/mutation-types"; 
 import { getAllNews } from "../../api";
-import StatCard from "./StatCard.vue"
+import StatCard from "./StatCard.vue";
 import NewsCard from "./NewsCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
+import VideoFeature from "./VideoFeature.vue";
 
 export default {
   name: "Dashboard",
-  components: { StatCard, NewsCard, ImageCarousel },
+  components: { StatCard, NewsCard, ImageCarousel, VideoFeature },
   data() {
     return {
       newsArticles: [],
