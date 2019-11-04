@@ -28,6 +28,10 @@
       <v-btn @click="addLocationToBucketList" color="green" dark large absolute bottom right fab>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
+      <v-snackbar color="green" top v-model="snackbar" :timeout="2000">
+        Added to bucket list!
+        <v-btn color="grey" @click="snackbar = false" > X </v-btn>
+      </v-snackbar>
     </v-container>
   </div>
 </template>
@@ -49,6 +53,8 @@ export default {
   components: { StatCard, NewsCard, ImageCarousel, VideoFeature, ReviewsCard },
   data() {
     return {
+
+      snackbar: false,
 
       newsComponentLoading: true,
       reviewsComponentLoading: true,
@@ -110,8 +116,9 @@ export default {
 
   methods: {
     addLocationToBucketList() {
+      this.snackbar = true;
       let location = {
-        name:       this.locationName || 'new Location', 
+        name:       this.locationName || this.currentSearch, 
         rating:     this.stats[2].value, 
         safety:     this.stats[1].value, 
         costAccoms: this.stats[3].value, 
