@@ -6,10 +6,14 @@
             <v-row
               :align="alignment"
               :justify="justify"
-              style="height: 300px;"
             >
             <StatCard class="pa-3" v-for="stat in stats" :key="stat.id" v-bind:stat="stat"/>
           </v-row>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="6">
+          <ImageCarousel :imgStrings="['https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAADmRc5FAuJjjZ4cZO8S7u44EtZDiv_FmJ91D-TD9Kdy7JZMC7cTXhyNf8PN1UeZnThMDsPik2hRF15ZBVttJoOlDc2cOpx5ACm-twHrUBMS35JDNJ0wQBDcSkQIBSHqqeEhBtvTNW-S8YzI2GsTz1tEluGhRS53Gkm92_Phmhd_DEe-dXjgTzuQ&key=AIzaSyBLMsG90Og6RJhX8yvZ-YLuLXhOiKVgrGI']"/>
         </v-col>
       </v-row>
       <v-row>
@@ -31,10 +35,11 @@ import store from "../../store/store";
 import { getAllNews } from "../../api";
 import StatCard from "./StatCard.vue"
 import NewsCard from "./NewsCard.vue";
+import ImageCarousel from "./ImageCarousel.vue";
 
 export default {
   name: "Dashboard",
-  components: { StatCard, NewsCard },
+  components: { StatCard, NewsCard, ImageCarousel },
   data() {
     return {
       newsArticles: [],
