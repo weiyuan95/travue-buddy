@@ -1,8 +1,8 @@
 <template>
   <!-- we should figure out how to prefetch the image, it's 3mb -->
   <v-container class="home-container" fluid>
-    <v-col class="offset-md-3 mt-12 text-center display-3 font-weight-black" sm="6">TravelVue</v-col>
-    <v-col class="offset-md-3 text-center headline" sm="6">Travelling made Simple.</v-col>
+    <v-col class="offset-md-3 mt-12 text-center display-3 white-text font-weight-black" sm="6">TravelVue</v-col>
+    <v-col class="offset-md-3 text-center headline white-text" sm="6">Travelling made Simple.</v-col>
     <v-col class="offset-md-3" sm="6">
       <v-row align="center">
         <CountryForm />
@@ -26,5 +26,10 @@ export default {
   background-image: url("../../assets/bg_images/img_1.jpg");
   height: 100vh;
   background-size: cover;
+}
+
+.white-text {
+  color: white;
+  text-shadow: 1px 1px #000000;
 }
 </style>
