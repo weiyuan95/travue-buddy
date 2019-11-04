@@ -1,7 +1,7 @@
 <template>
   <v-col>
-    <v-card class="pa-3 pb-1">
-      <v-form class="px-7" @submit="submit()">
+    <v-card class="pa-3 pb-1" light>
+      <v-form class="px-7" @submit="submit()" light>
         <v-row>
           <v-text-field
             v-model="destination"

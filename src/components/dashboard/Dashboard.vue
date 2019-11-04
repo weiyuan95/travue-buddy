@@ -25,7 +25,7 @@
           <ReviewsCard :loading="reviewsComponentLoading" :reviews="reviews" />
         </v-col>
       </v-row>
-      <v-btn @click="addLocationToBucketList" color="green" dark large absolute bottom right fab>
+      <v-btn @click="addLocationToBucketList" color="green" dark large bottom right fab fixed>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
       <v-snackbar color="green" top v-model="snackbar" :timeout="2000">
@@ -122,11 +122,11 @@ export default {
     addLocationToBucketList() {
       this.snackbar = true;
       let location = {
-        name:       this.locationName || this.currentSearch, 
-        rating:     this.stats[2].value, 
-        safety:     this.stats[1].value, 
-        costAccoms: this.stats[3].value, 
-        dailyCost:  this.stats[0].value, 
+        name:       this.locationName || this.currentSearch,
+        rating:     this.stats[2].value,
+        safety:     this.stats[1].value,
+        costAccoms: this.stats[3].value,
+        dailyCost:  this.stats[0].value,
         timeSpent:  this.stats[4].value,
         imgUrls:    this.imgUrls,
         ytVideoURL: this.ytVideoURL,
@@ -149,10 +149,10 @@ export default {
   computed: {
     currentSearch() { return store.state.currentSearch; }
   },
-  
+
   watch: {
     currentSearch() {
-      
+
       this.newsComponentLoading = true;
       this.imgCarouselComponentLoading = true;
       this.reviewsComponentLoading = true;
