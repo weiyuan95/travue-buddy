@@ -43,6 +43,7 @@ import { BUCKET_ADD_LOCATION } from '../../store/mutation-types';
 import { getAllNews } from "../../api";
 import { getCountryCode } from "../../api";
 import { getPlacesDetails } from "../../api";
+import { getPhotos } from "../../api";
 
 import StatCard from "./StatCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
@@ -65,7 +66,7 @@ export default {
 
       // Location data
       locationName: '',
-      imgUrls: ['https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAADmRc5FAuJjjZ4cZO8S7u44EtZDiv_FmJ91D-TD9Kdy7JZMC7cTXhyNf8PN1UeZnThMDsPik2hRF15ZBVttJoOlDc2cOpx5ACm-twHrUBMS35JDNJ0wQBDcSkQIBSHqqeEhBtvTNW-S8YzI2GsTz1tEluGhRS53Gkm92_Phmhd_DEe-dXjgTzuQ&key=AIzaSyBLMsG90Og6RJhX8yvZ-YLuLXhOiKVgrGI'],
+      imgUrls: [],
       ytVideoURL: 'https://www.youtube.com/embed/xniDjNQtqyg',
       newsArticles: [],
       reviews: [],
@@ -143,6 +144,7 @@ export default {
 
       getCountryCode(places.location.lat, places.location.lng)
       .then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
+
     }
   },
 
@@ -167,6 +169,12 @@ export default {
       getAllNews({ keyword: this.currentSearch })
       .then(articles => this.newsArticles = articles)
       .then(() => this.newsComponentLoading = false);
+
+
+      getPhotos({ keyword: this.currentSearch })
+      .then(imgUrls => this.imgUrls = imgUrls)
+      .then(() => this.imgCarouselComponentLoading = false);
+
 
       getPlacesDetails({ keyword: this.currentSearch})
       .then(places => this.updateData(places))

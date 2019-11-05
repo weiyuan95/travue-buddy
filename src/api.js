@@ -1,5 +1,6 @@
 const newsAPIKey = process.env.VUE_APP_NEWS_API_KEY;
 const openCageAPIKey = process.env.VUE_APP_OPEN_CAGE_API_KEY;
+const unsplashAPIKey = process.env.VUE_APP_UNSPLASH_API_KEY;
 /* eslint-disable no-console */
 export async function getAllNews({ keyword }) {
   
@@ -18,16 +19,42 @@ export async function getAllNews({ keyword }) {
 }
 
 
+export async function getPhotos( { keyword }) {
+
+  let splitKeyword = keyword.split(" ");
+  let joinedKeyword = splitKeyword.join("%20");
+
+  const unsplashURL = `https://api.unsplash.com/search/photos?` + 
+                        `query=${joinedKeyword}&page=1&` +  
+                        `client_id=${unsplashAPIKey}&` + 
+                        `orientation=landscape`;
+
+  let response = await fetch(unsplashURL);
+  response = await response.json();
+
+  let results = await response.results; 
+  let flattenedData = [];
+
+  for (let i in results) {
+    let url = results[i].urls.regular;
+    flattenedData.push(url);
+  }
+
+  return flattenedData;
+}
+
+
 export async function getPlacesDetails({ keyword }) {
   let splitKeyword = keyword.split(" ");
   let joinedKeyword = splitKeyword.join("%20");
 
-  const placesUrl = `https://travelvue-backend.herokuapp.com/places/${joinedKeyword}`;
-  let response = await fetch(placesUrl);
+  const placesURL = `https://travelvue-backend.herokuapp.com/places/${joinedKeyword}`;
+  let response = await fetch(placesURL);
   response = await response.json();
 
   return response;
 }
+
 
 export async function getSafetyRating(countryCode) {
   countryCode = countryCode.toUpperCase();
