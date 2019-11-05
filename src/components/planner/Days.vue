@@ -2,12 +2,16 @@
   <div>
       <v-card>
         <v-card-title><h3>Day {{ dayNum }}🌴</h3></v-card-title>
+        <v-card-text>
+            <div>
         <draggable class="list-group">
-          <transition-group type="transition" :name="!drag ? 'flip-list' : null">
+          <transition-group type="transition">
             <day-card v-for="item in items" :item="item" v-bind:key="item.id" />
             <!-- need to place the DayCard component with a v-for -->
           </transition-group>
         </draggable>
+            </div>
+        </v-card-text>
       </v-card>
   </div>
 </template>
