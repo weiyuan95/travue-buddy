@@ -1,19 +1,22 @@
 <template>
   <div>
-    <draggable>
-      <v-card>
-        <v-card-title><h3>Day {{ dayNum }}🌴</h3></v-card-title>
-        <v-card-text>
-            <div>
-        <draggable class="list-group" tag='v-card' group='events'>
-          <transition-group type="transition">
-            <day-card v-for="item in items" :item="item" v-bind:key="item.id" />
-          </transition-group>
-        </draggable>
-            </div>
-        </v-card-text>
-      </v-card>
-    </draggable>
+    <v-container class='board'>
+      <h2>Day {{ dayNum }} 🌴</h2>
+      <v-divider style='padding:10px;' ></v-divider>
+      <draggable
+        v-model="items"
+        tag="day-card"
+        group="events"
+        @start="isDragging=true"
+        @end="isDragging=false"
+        :empty-insert-threshold="200"
+      >
+        <!-- <transition-group type="transition"> -->
+        <day-card v-for="item in items" :item="item" :key="item.id" />
+        <!-- </transition-group> -->
+      </draggable>
+    </v-container>
+    <!-- <div>{{ items }}</div> -->
   </div>
 </template>
 
@@ -23,18 +26,25 @@ import DayCard from "./DayCard.vue";
 export default {
   name: "Days",
   props: ["items", "dayNum"],
-  components: { DayCard, draggable }
+  components: { DayCard, draggable },
+  data() {
+    return {
+      isDragging: false
+    };
+  }
 };
 </script>
 
-<style lang="scss" scoped>
-.v-card-title {
-    text-align: center
-
+<style scoped>
+h2 {
+  text-align: center;
 }
 
-.v-card {
-    background-color: rgb(212, 208, 208);
-    align-content: space-around;
+.board {
+  background-color: rgb(238, 238, 238, 0.9);
+  /* opacity: 0.8; */
+  align-content: space-between;
+  min-height: 100px;
 }
+
 </style>
