@@ -2,6 +2,9 @@
 <div>
     <v-card elevation='4'>
         <v-card-title class='justify-center'>{{ item.title }} </v-card-title>
+
+        <v-card-text> {{ item.rating }} </v-card-text>
+        <v-card-text> {{ item.costPerDay }} </v-card-text>
     </v-card>
 </div>
 </template>
