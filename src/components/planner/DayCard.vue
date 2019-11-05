@@ -2,9 +2,8 @@
 <div>
     <v-card elevation='4'>
         <v-card-title class='justify-center'>{{ item.title }} </v-card-title>
-
-        <v-card-text> {{ item.rating }} </v-card-text>
-        <v-card-text> {{ item.costPerDay }} </v-card-text>
+        <v-card-subtitle> {{ item.type }} </v-card-subtitle>
+        <v-card-text> <a href=item.link> Check it out! </a> </v-card-text>
     </v-card>
 </div>
 </template>
@@ -25,5 +24,6 @@ export default {
 
 .v-card {
     background-color: white;
+    justify-content: center;
 }
 </style>    
