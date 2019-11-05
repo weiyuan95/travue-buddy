@@ -4,9 +4,7 @@
     <v-container>
       <v-row justify="space-around">
         <v-col v-for="(items, dayNum) in days" v-bind:key="dayNum">
-          <draggable>
             <Days :dayNum="dayNum" :items="items" />
-          </draggable>
         </v-col>
       </v-row>
     </v-container>
@@ -14,10 +12,10 @@
 </template>
 
 <script>
-import draggable from 'vuedraggable';
+// import draggable from 'vuedraggable';
 import Days from './Days.vue';
 export default {
-  components: { Days, draggable },
+  components: { Days },
   data() {
     return { 
       days: {
