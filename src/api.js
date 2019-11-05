@@ -1,6 +1,7 @@
 const newsAPIKey = process.env.VUE_APP_NEWS_API_KEY;
 const openCageAPIKey = process.env.VUE_APP_OPEN_CAGE_API_KEY;
 const unsplashAPIKey = process.env.VUE_APP_UNSPLASH_API_KEY;
+const youtubeAPIkey = process.env.VUE_APP_YOUTUBE_API_KEY;
 /* eslint-disable no-console */
 export async function getAllNews({ keyword }) {
   
@@ -19,7 +20,32 @@ export async function getAllNews({ keyword }) {
 }
 
 
-export async function getPhotos( { keyword }) {
+export async function getVideos({ keyword }) {
+  
+  let splitKeyword = keyword.split(" ");
+  let joinedKeyword = splitKeyword.join("%20") + "%20vlog";
+
+  const youtubeURL = `https://www.googleapis.com/youtube/v3/search?` + 
+                      `q=${joinedKeyword}&part=snippet&key=${youtubeAPIkey}`
+
+  let response = await fetch(youtubeURL);
+  console.log(">>>> videos", response)
+  response = await response.json();
+
+  let results = await response.items;
+  let flattenedData = [];
+
+  for (let i in results) {
+    let videoId = results[i].id.videoId;
+    let videoUrl = `https://www.youtube.com/embed/${videoId}`;
+
+    flattenedData.push(videoUrl);
+  }  
+
+  return flattenedData;
+}
+
+export async function getPhotos({ keyword }) {
 
   let splitKeyword = keyword.split(" ");
   let joinedKeyword = splitKeyword.join("%20");

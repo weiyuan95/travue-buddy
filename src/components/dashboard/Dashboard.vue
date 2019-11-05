@@ -11,7 +11,7 @@
           <ImageCarousel :loading="imgCarouselComponentLoading" :imgStrings="imgUrls"/>
         </v-col>
         <v-col cols="6">
-          <VideoFeature :loading="vidFeatureComponentLoading" :link="ytVideoURL"/>
+          <VideoFeature :loading="vidFeatureComponentLoading" :ytLinks="ytVideoURLs"/>
         </v-col>
       </v-row>
       <v-row>
@@ -41,6 +41,7 @@ import { getAllNews } from "../../api";
 import { getCountryCode } from "../../api";
 import { getPlacesDetails } from "../../api";
 import { getPhotos } from "../../api";
+import { getVideos } from "../../api";
 
 import StatCard from "./StatCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
@@ -65,7 +66,7 @@ export default {
       // Location data
       locationName: '',
       imgUrls: [],
-      ytVideoURL: 'https://www.youtube.com/embed/xniDjNQtqyg',
+      ytVideoURLs: [],
       newsArticles: [],
       reviews: [],
       safetyRating: [],
@@ -160,8 +161,6 @@ export default {
       this.statCardComponentLoading = true;
 
 
-      // getAllVids()
-      setTimeout(() => this.vidFeatureComponentLoading = false, 500);
 
       getAllNews({ keyword: this.currentSearch })
       .then(articles => this.newsArticles = articles)
@@ -171,6 +170,10 @@ export default {
       getPhotos({ keyword: this.currentSearch })
       .then(imgUrls => this.imgUrls = imgUrls)
       .then(() => this.imgCarouselComponentLoading = false);
+
+      getVideos({ keyword : this.currentSearch })
+      .then(ytVideoURLs => this.ytVideoURLs = ytVideoURLs)
+      .then(() => this.vidFeatureComponentLoading = false);
 
 
       getPlacesDetails({ keyword: this.currentSearch})
