@@ -2,6 +2,9 @@ const newsAPIKey = process.env.VUE_APP_NEWS_API_KEY;
 const openCageAPIKey = process.env.VUE_APP_OPEN_CAGE_API_KEY;
 const unsplashAPIKey = process.env.VUE_APP_UNSPLASH_API_KEY;
 const youtubeAPIkey = process.env.VUE_APP_YOUTUBE_API_KEY;
+const fourSquareAPIKey = process.env.VUE_APP_FOURSQUARE_API_KEY;
+const fourSquareApiSecret = process.env.VUE_APP_FOURSQUARE_SECRET;
+
 /* eslint-disable no-console */
 export async function getAllNews({ keyword }) {
   
@@ -19,6 +22,50 @@ export async function getAllNews({ keyword }) {
   return articles;
 }
 
+export async function getNearbyPlaces(lat, lng) {
+ 
+  let rightNow = new Date();
+  let dateStr = rightNow.toISOString().slice(0,10).replace(/-/g,"")
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
+  const fourSquareURL = `https://api.foursquare.com/v2/venues/explore?` + 
+              `client_id=${fourSquareAPIKey}` + 
+              `&client_secret=${fourSquareApiSecret}` +
+              `&ll=${lat},${lng}` + 
+              `&v=${dateStr}`;
+  
+  let response = await fetch(fourSquareURL);
+
+  response = await response.json()
+  let placeDetails = response.response.groups[0].items;
+  let flattenedData = [];
+  let stop = 1;
+
+  for (let i in placeDetails) {
+    if (stop == 7) {
+      break;
+    }
+
+    let detail = placeDetails[i];
+    let category = detail.venue.categories[0].name;
+    let photos = await getPhotos({ keyword : category })
+    let toAdd = {
+      name: detail.venue.name,
+      category: category,
+      photoUrl: photos[getRandomInt(photos.length)]
+    }
+
+    flattenedData.push(toAdd);
+
+    stop++;
+  }
+
+  return flattenedData;
+}
+
 
 export async function getVideos({ keyword }) {
   
@@ -29,7 +76,6 @@ export async function getVideos({ keyword }) {
                       `q=${joinedKeyword}&part=snippet&key=${youtubeAPIkey}`
 
   let response = await fetch(youtubeURL);
-  console.log(">>>> videos", response)
   response = await response.json();
 
   let results = await response.items;
@@ -45,8 +91,8 @@ export async function getVideos({ keyword }) {
   return flattenedData;
 }
 
-export async function getPhotos({ keyword }) {
 
+export async function getPhotos({ keyword }) {
   let splitKeyword = keyword.split(" ");
   let joinedKeyword = splitKeyword.join("%20");
 

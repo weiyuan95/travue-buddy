@@ -22,6 +22,12 @@
           <ReviewsCard :loading="reviewsComponentLoading" :reviews="reviews" />
         </v-col>
       </v-row>
+      <h1>Nearby Places</h1>
+      <v-row justify="center">
+        <v-col :cols="Math.floor(12/nearbyPlaces.length)" v-for="(place, i) in nearbyPlaces" :key="i">
+          <LocationCard v-on:click.native="changeCurrentSearch($event, place.name)" v-bind:place="place" :loading="nearByComponentLoading"></LocationCard>
+        </v-col>
+      </v-row>
       <v-btn @click="addLocationToBucketList" color="#ff0266" dark large bottom right fab fixed>
         <v-icon>mdi-heart</v-icon>
       </v-btn>
@@ -42,21 +48,26 @@ import { getCountryCode } from "../../api";
 import { getPlacesDetails } from "../../api";
 import { getPhotos } from "../../api";
 import { getVideos } from "../../api";
+import { getNearbyPlaces } from "../../api";
+import { CHANGE_CURRENT_SEARCH } from "../../store/mutation-types";
 
 import StatCard from "./StatCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
 import VideoFeature from "./VideoFeature.vue";
 import NewsCard from "./NewsCard.vue";
 import ReviewsCard from "./ReviewsCard.vue";
+import LocationCard from "./LocationCard.vue";
 
 export default {
   name: "Dashboard",
-  components: { StatCard, NewsCard, ImageCarousel, VideoFeature, ReviewsCard },
+  components: { StatCard, NewsCard, ImageCarousel, 
+                VideoFeature, ReviewsCard, LocationCard },
   data() {
     return {
 
       snackbar: false,
 
+      nearByComponentLoading: true,
       newsComponentLoading: true,
       reviewsComponentLoading: true,
       imgCarouselComponentLoading: true,
@@ -70,7 +81,32 @@ export default {
       newsArticles: [],
       reviews: [],
       safetyRating: [],
-      places: [],
+      nearbyPlaces: [
+        {
+          name: "Kuta Beach",
+          imgUrl: "https://i.imgur.com/jdd4qZS.jpg"
+        },
+        {
+          name: "Sentosa",
+          imgUrl: "https://i.imgur.com/jdd4qZS.jpg"
+        },
+        {
+          name: "Effiel Tower",
+          imgUrl: "https://i.imgur.com/jdd4qZS.jpg"
+        },
+        {
+          name: "Effiel Tower",
+          imgUrl: "https://i.imgur.com/jdd4qZS.jpg"
+        },
+        {
+          name: "Effiel Tower",
+          imgUrl: "https://i.imgur.com/jdd4qZS.jpg"
+        },
+        {
+          name: "Effiel Tower",
+          imgUrl: "https://i.imgur.com/jdd4qZS.jpg"
+        }
+      ],
 
       // stats data to be repopulated with data from VueX
       stats: {
@@ -119,6 +155,10 @@ export default {
   },
 
   methods: {
+    changeCurrentSearch: function(event, value) {
+      console.log("clicked man");
+      store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
+    }, 
     addLocationToBucketList() {
       this.snackbar = true;
       let location = {
@@ -144,6 +184,9 @@ export default {
       getCountryCode(places.location.lat, places.location.lng)
       .then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
 
+      getNearbyPlaces(places.location.lat, places.location.lng)
+      .then(nearbyPlaces => this.nearbyPlaces = nearbyPlaces)
+      .then(() => this.nearByComponentLoading = false);
     }
   },
 
@@ -153,14 +196,15 @@ export default {
 
   watch: {
     currentSearch() {
-
+      
+      this.nearByComponentLoading = true;
       this.newsComponentLoading = true;
       this.imgCarouselComponentLoading = true;
       this.reviewsComponentLoading = true;
       this.vidFeatureComponentLoading = true;
       this.statCardComponentLoading = true;
 
-
+      
 
       getAllNews({ keyword: this.currentSearch })
       .then(articles => this.newsArticles = articles)
