@@ -1,6 +1,6 @@
 <template>
   <div>
-      <v-card width="240" height="120" elevation="5">
+      <v-card width="240" height="120" elevation="5" :loading="loading">
           <v-icon :color = "stat.color" size = "60" class="statIcon">
             {{ stat.icon }}
           </v-icon>
@@ -26,7 +26,7 @@
 <script>
 export default {
     name: 'StatCard',
-    props: ["stat"]
+    props: ["stat", 'loading']
 }
 </script>
 

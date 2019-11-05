@@ -1,13 +1,10 @@
 <template>
   <div>
     <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-            <v-row
-            >
-            <StatCard class="pa-3" v-for="stat in stats" :key="stat.id" v-bind:stat="stat"/>
-          </v-row>
-        </v-col>
+      <v-row justify="center">
+          <v-col :cols="Math.floor(12/Object.keys(stats).length)" v-for="stat in stats" :key="stat.id">
+            <StatCard :loading="statCardComponentLoading" v-bind:stat="stat"/>
+          </v-col>
       </v-row>
       <v-row>
         <v-col cols="6">
@@ -63,6 +60,7 @@ export default {
       reviewsComponentLoading: true,
       imgCarouselComponentLoading: true,
       vidFeatureComponentLoading: true,
+      statCardComponentLoading: true,
 
       // Location data
       locationName: '',
@@ -159,9 +157,8 @@ export default {
       this.imgCarouselComponentLoading = true;
       this.reviewsComponentLoading = true;
       this.vidFeatureComponentLoading = true;
+      this.statCardComponentLoading = true;
 
-      // getAllImages()
-      setTimeout(() => this.imgCarouselComponentLoading = false, 500);
 
       // getAllVids()
       setTimeout(() => this.vidFeatureComponentLoading = false, 500);
@@ -178,7 +175,8 @@ export default {
 
       getPlacesDetails({ keyword: this.currentSearch})
       .then(places => this.updateData(places))
-      .then(() => this.reviewsComponentLoading = false);
+      .then(() => this.reviewsComponentLoading = false)
+      .then(() => this.statCardComponentLoading = false);
 
     }
   }
