@@ -1,20 +1,17 @@
 <template>
   <div>
     <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-            <v-row
-            >
-            <StatCard class="pa-3" v-for="stat in stats" :key="stat.id" v-bind:stat="stat"/>
-          </v-row>
-        </v-col>
+      <v-row justify="center">
+          <v-col :cols="Math.floor(12/Object.keys(stats).length)" v-for="stat in stats" :key="stat.id">
+            <StatCard :loading="statCardComponentLoading" v-bind:stat="stat"/>
+          </v-col>
       </v-row>
       <v-row>
         <v-col cols="6">
           <ImageCarousel :loading="imgCarouselComponentLoading" :imgStrings="imgUrls"/>
         </v-col>
         <v-col cols="6">
-          <VideoFeature :loading="vidFeatureComponentLoading" :link="ytVideoURL"/>
+          <VideoFeature :loading="vidFeatureComponentLoading" :ytLinks="ytVideoURLs"/>
         </v-col>
       </v-row>
       <v-row>
@@ -43,6 +40,8 @@ import { BUCKET_ADD_LOCATION } from '../../store/mutation-types';
 import { getAllNews } from "../../api";
 import { getCountryCode } from "../../api";
 import { getPlacesDetails } from "../../api";
+import { getPhotos } from "../../api";
+import { getVideos } from "../../api";
 
 import StatCard from "./StatCard.vue";
 import ImageCarousel from "./ImageCarousel.vue";
@@ -62,11 +61,12 @@ export default {
       reviewsComponentLoading: true,
       imgCarouselComponentLoading: true,
       vidFeatureComponentLoading: true,
+      statCardComponentLoading: true,
 
       // Location data
       locationName: '',
-      imgUrls: ['https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=CmRaAAAADmRc5FAuJjjZ4cZO8S7u44EtZDiv_FmJ91D-TD9Kdy7JZMC7cTXhyNf8PN1UeZnThMDsPik2hRF15ZBVttJoOlDc2cOpx5ACm-twHrUBMS35JDNJ0wQBDcSkQIBSHqqeEhBtvTNW-S8YzI2GsTz1tEluGhRS53Gkm92_Phmhd_DEe-dXjgTzuQ&key=AIzaSyBLMsG90Og6RJhX8yvZ-YLuLXhOiKVgrGI'],
-      ytVideoURL: 'https://www.youtube.com/embed/xniDjNQtqyg',
+      imgUrls: [],
+      ytVideoURLs: [],
       newsArticles: [],
       reviews: [],
       safetyRating: [],
@@ -143,6 +143,7 @@ export default {
 
       getCountryCode(places.location.lat, places.location.lng)
       .then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
+
     }
   },
 
@@ -157,20 +158,28 @@ export default {
       this.imgCarouselComponentLoading = true;
       this.reviewsComponentLoading = true;
       this.vidFeatureComponentLoading = true;
+      this.statCardComponentLoading = true;
 
-      // getAllImages()
-      setTimeout(() => this.imgCarouselComponentLoading = false, 500);
 
-      // getAllVids()
-      setTimeout(() => this.vidFeatureComponentLoading = false, 500);
 
       getAllNews({ keyword: this.currentSearch })
       .then(articles => this.newsArticles = articles)
       .then(() => this.newsComponentLoading = false);
 
+
+      getPhotos({ keyword: this.currentSearch })
+      .then(imgUrls => this.imgUrls = imgUrls)
+      .then(() => this.imgCarouselComponentLoading = false);
+
+      getVideos({ keyword : this.currentSearch })
+      .then(ytVideoURLs => this.ytVideoURLs = ytVideoURLs)
+      .then(() => this.vidFeatureComponentLoading = false);
+
+
       getPlacesDetails({ keyword: this.currentSearch})
       .then(places => this.updateData(places))
-      .then(() => this.reviewsComponentLoading = false);
+      .then(() => this.reviewsComponentLoading = false)
+      .then(() => this.statCardComponentLoading = false);
 
     }
   }
