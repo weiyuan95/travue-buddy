@@ -1,7 +1,17 @@
 <template>
   <div>
+    <h2>Bar</h2>
+    <input id="map">
+    <vuetify-google-autocomplete
+    id="map"
+    append-icon="search"
+    disabled="false"
+    placeholder="Start typing"
+    v-on:placechanged="getAddressData"
+    >
+    <h1>hello</h1>
+    </vuetify-google-autocomplete>
     <h1>Playground</h1>
-    
     <v-btn @click="addToBucketList"></v-btn>
     <hr>
     <div>
@@ -22,7 +32,15 @@ export default {
       bucketList: store.state.bucket
     }
   },
+  mounted() {
+      // To demonstrate functionality of exposed component functions
+      // Here we make focus on the user input
+      this.$refs.address.focus();
+  },
   methods: {
+    getAddressData: function (addressData) {
+      this.address = addressData;
+    },
     addToBucketList() {
       let location = {
         rating: 5,

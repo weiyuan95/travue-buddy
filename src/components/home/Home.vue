@@ -5,18 +5,22 @@
     <v-col class="offset-md-3 text-center headline font-weight-bold white-text" sm="6">Travel Information made Easy.</v-col>
     <v-col class="offset-md-3" sm="6">
       <v-row align="center">
-        <CountryForm />
+        <!-- <CountryForm /> -->
+        <v-col class="offset-md-6">
+          <SearchBar/>
+        </v-col>
+        
       </v-row>
     </v-col>
   </v-container>
 </template>
 
 <script>
-import CountryForm from "./CountryForm";
+import SearchBar from "./SearchBar";
 
 export default {
   components: {
-    CountryForm
+    SearchBar
   }
 };
 </script>
