@@ -9,6 +9,7 @@
         refer="places"
         placeholder="Where do you want to go?"
         v-on:placechanged="getAddressData"
+        types="establishment"
         >
         </vuetify-google-autocomplete>
 
