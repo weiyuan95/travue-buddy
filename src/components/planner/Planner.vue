@@ -1,10 +1,26 @@
 <template>
-  <div class="main" v-bind:style="{ 'background-image': 'url(' + currentImage + ')' }">
-    <h1>Planner</h1>
-    <v-container>
+  <div class="main">
+    <v-container class="bucket-wrapper">
+      <h1 class="font">Bucket List</h1>
+      <br>
+      <draggable 
+      v-model="bucket"
+      tag="activity-card"
+      group="events"
+      ghost-class="ghost"
+      @start="isDragging=true"
+      @end="isDragging=false"
+      :empty-insert-threshold="200"
+      >
+        <activity-card v-for="activity in bucket" :key="activity.name" :activity="activity" />
+      </draggable>
+    </v-container>
+    <v-container class="day-list-wrapper">
+      <h1 class="font">Planner</h1>
+      <br>
       <v-row>
         <v-col v-for="(items, dayNum) in days" v-bind:key="dayNum">
-          <Days :dayNum="dayNum" :items="items" />
+          <day-list class="daylist" :dayNum="dayNum" :items="items" />
         </v-col>
       </v-row>
     </v-container>
@@ -12,73 +28,37 @@
 </template>
 
 <script>
-// import draggable from 'vuedraggable';
-import Days from "./Days.vue";
+import draggable from 'vuedraggable';
+import DayList from "./DayList";
+import ActivityCard from "./ActivityCard";
+import store from "../../store/store";
 export default {
-  components: { Days },
   data() {
     return {
-      days: {
-        1: [
-          {
-            id: 1,
-            title: "Kuta Beach Club",
-            type: "Place of Interest",
-            link: "https://youtube.com"
-          },
-          {
-            id: 2,
-            title: "Seminyak Night Street",
-            type: "Place of Interest",
-            link: "https://youtube.com"
-          }
-        ],
-        2: [
-          {
-            id: 1,
-            title: "Kuta Legion Hotel",
-            type: "Accomodation",
-            link: "https://kutahotel.com"
-          },
-          {
-            id: 2,
-            title: "Seminyak High Hopes Hotel",
-            type: "Accomodation",
-            link: "https://highhopeshotel.com"
-          }
-        ],
-        3: []
-      },
-      cycle: null,
-      index: 0,
-      currentImage: 'https://images.unsplash.com/photo-1483304528321-0674f0040030?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80' ,
-      images: [
-        "https://images.unsplash.com/photo-1483304528321-0674f0040030?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-        "https://images.unsplash.com/photo-1532973497172-04b34d604825?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1641&q=80",
-        "https://images.unsplash.com/photo-1521086248378-5fe2b23c8b23?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
-        "https://images.unsplash.com/photo-1541669257754-60eaba3ad41d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80",
-      ]
-    };
+      isDragging: false,
+      bucket: [],
+    }
   },
-  created () {
-    this.startCycle();
+  mounted() {
+    store.state.bucket.forEach(activity => 
+      this.bucket.push(activity)
+    );
   },
-  methods: {
-    startCycle() {
-      this.cycle = setInterval(() => {
-        this.currentImage = this.images[this.index];
-        this.index = this.index + 1;
-        if (this.index == this.images.length) {
-          this.index =  0;
-        }
-        }, 15000);
+  components: { DayList, ActivityCard, draggable },
+  computed: {
 
-    },
+    days() {
+      return {
+        1: [],
+        2: [],
+        3: [],
+      }
+    }
   }
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
   padding-top: 20px;
   padding-bottom: 0px;
@@ -86,7 +66,30 @@ h1 {
 }
 
 .main {
-  /* height: 100vh; */
+  display: flex;
+  height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1521086248378-5fe2b23c8b23?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80");
   background-size: cover;
+  overflow: scroll;
 }
+
+.font {
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.493);
+}
+
+.bucket-wrapper {
+  min-width: 250px;
+  max-width: 400px;
+  margin: 0px 0px 0px 0px;
+  background-color: rgba(255, 255, 255, 0.199);
+  border-right: 3px solid rgba(89, 89, 89, 0.194);
+}
+
+.ghost {
+  color: red;
+}
+
 </style>
