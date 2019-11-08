@@ -1,31 +1,48 @@
 <template>
   <div>
-    <v-container fluid>
-      <v-row justify="center">
-          <v-col :cols="Math.floor(12/Object.keys(stats).length)" v-for="stat in stats" :key="stat.id">
-            <StatCard :loading="statCardComponentLoading" v-bind:stat="stat"/>
-          </v-col>
-      </v-row>
+
+    <v-container>
       <v-row>
         <v-col cols="6">
-          <ImageCarousel :loading="imgCarouselComponentLoading" :imgStrings="imgUrls"/>
-        </v-col>
-        <v-col cols="6">
-          <VideoFeature :loading="vidFeatureComponentLoading" :ytLinks="ytVideoURLs"/>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col cols="6">
-          <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
+          <v-row>
+            <v-col
+              :cols="Math.floor(12/Object.keys(stats).length)"
+              v-for="stat in stats"
+              :key="stat.id"
+            >
+              <StatCard :loading="statCardComponentLoading" v-bind:stat="stat" />
+            </v-col>
+          </v-row>
+          <v-row>
+            <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
+          </v-row>
         </v-col>
         <v-col cols="6">
           <ReviewsCard :loading="reviewsComponentLoading" :reviews="reviews" />
         </v-col>
       </v-row>
+
+      <v-row>
+        <v-col cols="8">
+          <MediaContainer />
+        </v-col>
+        <v-col cols="4">
+          <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
+        </v-col>
+      </v-row>
+
       <h1>Nearby Places</h1>
       <v-row justify="center">
-        <v-col :cols="Math.floor(12/nearbyPlaces.length)" v-for="(place, i) in nearbyPlaces" :key="i">
-          <LocationCard v-on:click.native="changeCurrentSearch($event, place.name)" v-bind:place="place" :loading="nearByComponentLoading"></LocationCard>
+        <v-col
+          :cols="Math.floor(12/nearbyPlaces.length)"
+          v-for="(place, i) in nearbyPlaces"
+          :key="i"
+        >
+          <LocationCard
+            v-on:click.native="changeCurrentSearch($event, place.name)"
+            v-bind:place="place"
+            :loading="nearByComponentLoading"
+          ></LocationCard>
         </v-col>
       </v-row>
       <v-btn @click="addLocationToBucketList" color="#ff0266" dark large bottom right fab fixed>
@@ -33,7 +50,7 @@
       </v-btn>
       <v-snackbar class="font-weight-bold" color="secondary" top v-model="snackbar" :timeout="2000">
         Added to bucket list!
-        <v-btn color="accent" @click="snackbar = false" > X </v-btn>
+        <v-btn color="accent" @click="snackbar = false">X</v-btn>
       </v-snackbar>
     </v-container>
   </div>
@@ -42,7 +59,7 @@
 <script>
 /* eslint-disable no-console */
 import store from "../../store/store";
-import { BUCKET_ADD_LOCATION } from '../../store/mutation-types';
+import { BUCKET_ADD_LOCATION } from "../../store/mutation-types";
 import { getAllNews } from "../../api";
 import { getCountryCode } from "../../api";
 import { getPlacesDetails } from "../../api";
@@ -52,19 +69,16 @@ import { getNearbyPlaces } from "../../api";
 import { CHANGE_CURRENT_SEARCH } from "../../store/mutation-types";
 
 import StatCard from "./StatCard.vue";
-import ImageCarousel from "./ImageCarousel.vue";
-import VideoFeature from "./VideoFeature.vue";
 import NewsCard from "./NewsCard.vue";
 import ReviewsCard from "./ReviewsCard.vue";
 import LocationCard from "./LocationCard.vue";
+import MediaContainer from "./MediaContainer.vue";
 
 export default {
   name: "Dashboard",
-  components: { StatCard, NewsCard, ImageCarousel, 
-                VideoFeature, ReviewsCard, LocationCard },
+  components: { StatCard, NewsCard, ReviewsCard, LocationCard, MediaContainer },
   data() {
     return {
-
       snackbar: false,
 
       nearByComponentLoading: true,
@@ -75,7 +89,7 @@ export default {
       statCardComponentLoading: true,
 
       // Location data
-      locationName: '',
+      locationName: "",
       imgUrls: [],
       ytVideoURLs: [],
       newsArticles: [],
@@ -110,7 +124,7 @@ export default {
 
       // stats data to be repopulated with data from VueX
       stats: {
-        "costPerDay": {
+        costPerDay: {
           id: "costPerDay",
           title: "Average Cost",
           subtitle: "Daily",
@@ -118,7 +132,7 @@ export default {
           icon: "mdi-currency-usd",
           color: "amber darken-3"
         },
-        "safetyRating": {
+        safetyRating: {
           id: "safetyRating",
           subtitle: "Against 5 (Lower Better)",
           title: "Safety Rating",
@@ -126,7 +140,7 @@ export default {
           icon: "mdi-alert",
           color: "red lighten-2"
         },
-         "rating": {
+        rating: {
           id: "rating",
           subtitle: "Against 5",
           title: "Average Review",
@@ -135,52 +149,55 @@ export default {
           color: "indigo darken-1"
         }
       }
-    }
+    };
   },
 
   methods: {
     changeCurrentSearch: function(event, value) {
       console.log("clicked man");
       store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
-    }, 
+    },
     addLocationToBucketList() {
       this.snackbar = true;
       let location = {
-        name:       this.locationName || this.currentSearch,
-        rating:     this.stats[2].value,
-        safety:     this.stats[1].value,
+        name: this.locationName || this.currentSearch,
+        rating: this.stats[2].value,
+        safety: this.stats[1].value,
         costAccoms: this.stats[3].value,
-        dailyCost:  this.stats[0].value,
-        timeSpent:  this.stats[4].value,
-        imgUrls:    this.imgUrls,
+        dailyCost: this.stats[0].value,
+        timeSpent: this.stats[4].value,
+        imgUrls: this.imgUrls,
         ytVideoURL: this.ytVideoURL,
-        reviews:    this.reviews,
-        news:       this.newsArticles
-      }
+        reviews: this.reviews,
+        news: this.newsArticles
+      };
       store.commit(BUCKET_ADD_LOCATION, { location });
     },
 
     updateData(places) {
       this.places = places;
       this.reviews = places.reviews;
-      this.stats.rating.value = Math.round( places.rating * 10 ) / 10;
+      this.stats.rating.value = Math.round(places.rating * 10) / 10;
 
-      getCountryCode(places.location.lat, places.location.lng)
-      .then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
+      getCountryCode(places.location.lat, places.location.lng).then(
+        safetyRating =>
+          (this.stats.safetyRating.value = safetyRating.safetyRating)
+      );
 
       getNearbyPlaces(places.location.lat, places.location.lng)
-      .then(nearbyPlaces => this.nearbyPlaces = nearbyPlaces)
-      .then(() => this.nearByComponentLoading = false);
+        .then(nearbyPlaces => (this.nearbyPlaces = nearbyPlaces))
+        .then(() => (this.nearByComponentLoading = false));
     }
   },
 
   computed: {
-    currentSearch() { return store.state.currentSearch; }
+    currentSearch() {
+      return store.state.currentSearch;
+    }
   },
 
   watch: {
     currentSearch() {
-      
       this.nearByComponentLoading = true;
       this.newsComponentLoading = true;
       this.imgCarouselComponentLoading = true;
@@ -188,32 +205,26 @@ export default {
       this.vidFeatureComponentLoading = true;
       this.statCardComponentLoading = true;
 
-      
-
       getAllNews({ keyword: this.currentSearch })
-      .then(articles => this.newsArticles = articles)
-      .then(() => this.newsComponentLoading = false);
-
+        .then(articles => (this.newsArticles = articles))
+        .then(() => (this.newsComponentLoading = false));
 
       getPhotos({ keyword: this.currentSearch })
-      .then(imgUrls => this.imgUrls = imgUrls)
-      .then(() => this.imgCarouselComponentLoading = false);
+        .then(imgUrls => (this.imgUrls = imgUrls))
+        .then(() => (this.imgCarouselComponentLoading = false));
 
-      getVideos({ keyword : this.currentSearch })
-      .then(ytVideoURLs => this.ytVideoURLs = ytVideoURLs)
-      .then(() => this.vidFeatureComponentLoading = false);
+      getVideos({ keyword: this.currentSearch })
+        .then(ytVideoURLs => (this.ytVideoURLs = ytVideoURLs))
+        .then(() => (this.vidFeatureComponentLoading = false));
 
-
-      getPlacesDetails({ keyword: this.currentSearch})
-      .then(places => this.updateData(places))
-      .then(() => this.reviewsComponentLoading = false)
-      .then(() => this.statCardComponentLoading = false);
-
+      getPlacesDetails({ keyword: this.currentSearch })
+        .then(places => this.updateData(places))
+        .then(() => (this.reviewsComponentLoading = false))
+        .then(() => (this.statCardComponentLoading = false));
     }
   }
-}
+};
 </script>
 
 <style>
-
 </style>
