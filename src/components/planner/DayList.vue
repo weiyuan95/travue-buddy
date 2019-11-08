@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container class='board'>
-      <h2>Day {{ dayNum }} 🌴</h2>
+      <h2>Day {{ dayNum }}</h2>
       <v-divider style='padding:10px;' ></v-divider>
       <draggable
         v-model="activities"

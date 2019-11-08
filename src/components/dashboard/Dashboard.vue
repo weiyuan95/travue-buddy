@@ -163,11 +163,9 @@ export default {
       this.snackbar = true;
       let location = {
         name:       this.locationName || this.currentSearch,
-        rating:     this.stats[2].value,
-        safety:     this.stats[1].value,
-        costAccoms: this.stats[3].value,
-        dailyCost:  this.stats[0].value,
-        timeSpent:  this.stats[4].value,
+        rating:     this.stats.rating.value,
+        safety:     this.stats.safetyRating.value,
+        timeSpent:  this.stats.timeSpent.value,
         imgUrls:    this.imgUrls,
         ytVideoURL: this.ytVideoURL,
         reviews:    this.reviews,
