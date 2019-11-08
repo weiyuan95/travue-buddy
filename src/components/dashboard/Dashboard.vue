@@ -133,22 +133,6 @@ export default {
           value: 4.5,
           icon: "mdi-message-draw",
           color: "indigo darken-1"
-        },
-        "accomodationCost": {
-          id: "accomodationCost",
-          subtitle: "Daily (USD)",
-          title: "Accom Cost",
-          value: 45, // per night
-          icon: "mdi-home",
-          color: "cyan darken-1"
-        },
-        "timeSpent": {
-          id: "timeSpent",
-          subtitle: "Average Hours",
-          title: "Time Spent",
-          value: 1, // per hours
-          icon: "mdi-timer",
-          color: "grey darken-1"
         }
       }
     }
