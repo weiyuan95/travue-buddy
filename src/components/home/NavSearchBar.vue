@@ -8,7 +8,7 @@
       close-delay="50"
     >
       <v-card style="width: 400px; height: 40px" :elevation="hover ? 12 : 3">
-        <input style="width: 400px; height: 40px" id="map" type="text" v-model="destination" @keypress="enterSubmit($event)">
+        <input style="padding-left: 10px; width: 400px; height: 40px" id="map" type="text" v-model="destination" @keypress="enterSubmit($event)">
           <vuetify-google-autocomplete
           id="map"
           refer="places"
