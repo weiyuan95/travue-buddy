@@ -146,14 +146,14 @@ export default {
     addLocationToBucketList() {
       this.snackbar = true;
       let location = {
-        name:       this.locationName || this.currentSearch,
-        rating:     this.stats.rating.value,
-        safety:     this.stats.safetyRating.value,
-        timeSpent:  this.stats.timeSpent.value,
-        imgUrls:    this.imgUrls,
-        ytVideoURL: this.ytVideoURL,
-        reviews:    this.reviews,
-        news:       this.newsArticles
+        name:        this.locationName || this.currentSearch,
+        rating:      this.stats.rating.value,
+        safety:      this.stats.safetyRating.value,
+        costPerDay:  this.stats.costPerDay.value,
+        imgUrls:     this.imgUrls,
+        ytVideoURLs: this.ytVideoURLs,
+        reviews:     this.reviews,
+        news:        this.newsArticles
       }
       store.commit(BUCKET_ADD_LOCATION, { location });
     },
@@ -161,10 +161,14 @@ export default {
     updateData(places) {
       this.places = places;
       this.reviews = places.reviews;
+      this.reviewsComponentLoading = false;
       this.stats.rating.value = Math.round( places.rating * 10 ) / 10;
 
       getCountryCode(places.location.lat, places.location.lng)
-      .then(safetyRating => this.stats.safetyRating.value = safetyRating.safetyRating);
+      .then(safetyRating => {
+        this.stats.safetyRating.value = safetyRating.safetyRating
+        this.statCardComponentLoading = false
+      });
 
       getNearbyPlaces(places.location.lat, places.location.lng)
       .then(nearbyPlaces => this.nearbyPlaces = nearbyPlaces)
@@ -203,9 +207,7 @@ export default {
 
 
       getPlacesDetails({ keyword: this.currentSearch})
-      .then(places => this.updateData(places))
-      .then(() => this.reviewsComponentLoading = false)
-      .then(() => this.statCardComponentLoading = false);
+      .then(places => this.updateData(places));
 
     }
   }

@@ -34,11 +34,11 @@ export default {
 
 .white-text-header {
   color: white;
-  text-shadow: 2px 1px 1px #000000;
+  text-shadow: 2px 1px 1px #6f6f6f;
 }
 
 .white-text {
   color: white;
-  text-shadow: 1px 1px #000000;
+  text-shadow: 1px 1px #828282;
 }
 </style>

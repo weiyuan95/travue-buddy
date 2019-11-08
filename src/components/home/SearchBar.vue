@@ -93,6 +93,12 @@ body {
     height: 90px;
     border-radius: 50px;
     padding: 10px;
+    transition: 0.4s;
+}
+
+.searchBox:hover {
+  box-shadow: 1px 1px 20px 2px rgb(153, 253, 255);
+  transition: 0.4s;
 }
 
 .searchBox:hover > .searchInput {
@@ -128,8 +134,8 @@ body {
     outline:none;
     float:left;
     padding: 0;
-    color: black;
-    transition: 1000s;
+    color: rgb(167, 167, 167) !important;
+    transition: 0.4s;
     line-height: 40px;
     width: 0px;
     align-items: stretch;

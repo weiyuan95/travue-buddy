@@ -25,7 +25,7 @@ import draggable from "vuedraggable";
 import ActivityCard from "./ActivityCard.vue";
 export default {
   name: "DayList",
-  props: ["items", "dayNum"],
+  props: ["dayNum"],
   components: { ActivityCard, draggable },
   data() {
     return {
@@ -33,10 +33,6 @@ export default {
       activities: [],
     };
   },
-
-  mounted() {
-    this.items.forEach(item => this.activities.push(item));
-  }
 };
 </script>
 

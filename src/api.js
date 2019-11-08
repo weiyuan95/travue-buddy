@@ -86,9 +86,11 @@ export async function getVideos({ keyword }) {
     let videoUrl = `https://www.youtube.com/embed/${videoId}`;
 
     flattenedData.push(videoUrl);
-  }  
+  }
 
-  return flattenedData;
+  console.log('here', flattenedData)
+
+  return flattenedData.length > 0 ? flattenedData : ['https://www.youtube.com/embed/L1rESfCgUZo'];
 }
 
 
