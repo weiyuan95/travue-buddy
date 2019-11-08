@@ -45,6 +45,8 @@ h2 {
   /* opacity: 0.8; */
   align-content: space-between;
   min-height: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px 1px #676767;
 }
 
 </style>

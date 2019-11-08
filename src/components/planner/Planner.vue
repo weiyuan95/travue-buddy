@@ -1,5 +1,5 @@
 <template>
-  <div class="main" v-bind:style="{ 'background-image': 'url(' + currentImage + ')' }">
+  <div class="main">
     <h1>Planner</h1>
     <v-container>
       <v-row>
@@ -51,34 +51,14 @@ export default {
       },
       cycle: null,
       index: 0,
-      currentImage: 'https://images.unsplash.com/photo-1483304528321-0674f0040030?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80' ,
-      images: [
-        "https://images.unsplash.com/photo-1483304528321-0674f0040030?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
-        "https://images.unsplash.com/photo-1532973497172-04b34d604825?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1641&q=80",
-        "https://images.unsplash.com/photo-1521086248378-5fe2b23c8b23?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80",
-        "https://images.unsplash.com/photo-1541669257754-60eaba3ad41d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80",
-      ]
     };
   },
-  created () {
-    this.startCycle();
-  },
   methods: {
-    startCycle() {
-      this.cycle = setInterval(() => {
-        this.currentImage = this.images[this.index];
-        this.index = this.index + 1;
-        if (this.index == this.images.length) {
-          this.index =  0;
-        }
-        }, 15000);
-
-    },
   }
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
   padding-top: 20px;
   padding-bottom: 0px;
@@ -86,7 +66,9 @@ h1 {
 }
 
 .main {
-  /* height: 100vh; */
+  height: 100vh;
+  
+  background-image: url("https://images.unsplash.com/photo-1521086248378-5fe2b23c8b23?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80");
   background-size: cover;
 }
 </style>
