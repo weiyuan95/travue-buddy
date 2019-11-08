@@ -40,13 +40,13 @@ import { required } from "vuelidate/lib/validators";
 
 export default {
 
-    data: () => ({
-    destination: ""
-  }),
+  data: () => ({
+      destination: ""
+    }),
 
-    validations: {
-    destination: { required }
-  },
+  validations: {
+      destination: { required }
+    },
 
   computed: {
     destinationErrors() {
@@ -60,21 +60,22 @@ export default {
     }
   },
 
-    methods: {
-      enterSubmit: function($event) {
-        if ($event.charCode == 13) {
-          this.submit();
-        }
-      },
-      getAddressData: function (addressData) {
-        this.address = addressData;
-      },
-      submit() {
-        this.$v.$touch();
-        router.push("dashboard")
-        .then(() => store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: this.destination }))
+  methods: {
+    enterSubmit: function($event) {
+      if ($event.charCode == 13) {
+        this.submit();
       }
+    },
+    getAddressData: function (addressData) {
+      this.address = addressData;
+      this.destination = addressData.name;
+    },
+    submit() {
+      this.$v.$touch();
+      router.push("dashboard")
+      .then(() => store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: this.destination }))
     }
+  }
 }
 </script>
 

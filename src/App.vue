@@ -37,14 +37,10 @@
           <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
         </v-col>
         <v-spacer></v-spacer>
-        <v-col class="mt-8">
+        <v-col class="d-flex align-end flex-column" style="padding-right:5px;">
           <v-toolbar-items v-if="isNotHomePage">
-          <v-text-field
-          label="Search another country"
-          @change="changeCurrentSearch"
-          solo
-          ></v-text-field>
-        </v-toolbar-items>
+            <NavSearchBar/>
+          </v-toolbar-items>
         </v-col>
       </v-row>
     </v-app-bar>
@@ -66,9 +62,13 @@ import { routes } from "./routes.js";
 import router from "./routes.js";
 import store from "./store/store";
 import { CHANGE_CURRENT_SEARCH } from "./store/mutation-types";
+import NavSearchBar from "./components/home/NavSearchBar.vue";
 
 export default {
   name: "App",
+  components: {
+    NavSearchBar
+  },
   data: () => ({
     drawer: false,
     goDark: false,
