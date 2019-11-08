@@ -4,15 +4,15 @@
       <h2>Day {{ dayNum }} 🌴</h2>
       <v-divider style='padding:10px;' ></v-divider>
       <draggable
-        v-model="items"
-        tag="day-card"
+        v-model="activities"
+        tag="activity-card"
         group="events"
         @start="isDragging=true"
         @end="isDragging=false"
         :empty-insert-threshold="200"
       >
         <!-- <transition-group type="transition"> -->
-        <day-card v-for="item in items" :item="item" :key="item.id" />
+        <activity-card v-for="activity in activities" :activity="activity" :key="activity.id" />
         <!-- </transition-group> -->
       </draggable>
     </v-container>
@@ -22,15 +22,20 @@
 
 <script>
 import draggable from "vuedraggable";
-import DayCard from "./DayCard.vue";
+import ActivityCard from "./ActivityCard.vue";
 export default {
-  name: "Days",
+  name: "DayList",
   props: ["items", "dayNum"],
-  components: { DayCard, draggable },
+  components: { ActivityCard, draggable },
   data() {
     return {
-      isDragging: false
+      isDragging: false,
+      activities: [],
     };
+  },
+
+  mounted() {
+    this.items.forEach(item => this.activities.push(item));
   }
 };
 </script>
