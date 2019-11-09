@@ -4,6 +4,7 @@ const unsplashAPIKey = process.env.VUE_APP_UNSPLASH_API_KEY;
 const youtubeAPIkey = process.env.VUE_APP_YOUTUBE_API_KEY;
 const fourSquareAPIKey = process.env.VUE_APP_FOURSQUARE_API_KEY;
 const fourSquareApiSecret = process.env.VUE_APP_FOURSQUARE_SECRET;
+const weatherAPIKey = process.env.VUE_WEATHER_API_KEY;
 
 /* eslint-disable no-console */
 export async function getAllNews({ keyword }) {
@@ -20,6 +21,30 @@ export async function getAllNews({ keyword }) {
   });
 
   return articles;
+}
+
+export async function getWeather(lat, lng) {
+
+  function titleCase(string) {
+    var sentence = string.toLowerCase().split(" ");
+    for(var i = 0; i< sentence.length; i++){
+       sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+    }
+    document.write(sentence.join(" "));
+    return sentence;
+  }
+  
+  const weatherAPIURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${weatherAPIKey}`
+
+  let response = await fetch(weatherAPIURL);
+  response = await response.json();
+
+  let weatherDetails = {
+    description: titleCase(response.weather.description),
+    temperature: ( response.main.temp - 32 ) * 5/9
+  }
+
+  return weatherDetails
 }
 
 export async function getNearbyPlaces(lat, lng) {

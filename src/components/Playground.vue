@@ -2,15 +2,6 @@
   <div>
     <h2>Bar</h2>
     <input id="map">
-    <vuetify-google-autocomplete
-    id="map"
-    append-icon="search"
-    disabled="false"
-    placeholder="Start typing"
-    v-on:placechanged="getAddressData"
-    >
-    <h1>hello</h1>
-    </vuetify-google-autocomplete>
     <h1>Playground</h1>
     <v-btn @click="addToBucketList"></v-btn>
     <hr>
@@ -19,14 +10,22 @@
         {{ location.name }}
       </div>
     </div>
+    <WeatherCard/>
+    <MapCard/>
   </div>
 </template>
 
 <script>
 import store from "../store/store";
 import { BUCKET_ADD_LOCATION, BUCKET_REMOVE_LOCATION } from "../store/mutation-types";
+import WeatherCard from "./WeatherCard"
+import MapCard from "./dashboard/MapCard.vue";
 
 export default {
+  components : {
+    WeatherCard,
+    MapCard
+  },
   data() {
     return {
       bucketList: store.state.bucket
