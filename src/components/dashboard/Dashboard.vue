@@ -2,12 +2,19 @@
   <div>
     <v-container>
       <v-row>
-        <v-col cols="6">
+        <v-col cols="7">
+          <MediaContainer :imgUrls="imgUrls" :ytVideoURLs="ytVideoURLs" />
+        </v-col>
+      </v-row>
+
+      <v-row style="max-height: 700px">
+        <v-col>
           <v-row>
             <v-col
               :cols="Math.floor(12/Object.keys(stats).length)"
               v-for="stat in stats"
               :key="stat.id"
+              class="pt-0"
             >
               <StatCard :loading="statCardComponentLoading" v-bind:stat="stat" />
             </v-col>
@@ -18,14 +25,8 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col>
+        <v-col style="max-height: inherit">
           <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="8">
-          <MediaContainer :imgUrls="imgUrls" :ytVideoURLs="ytVideoURLs"/>
         </v-col>
       </v-row>
 
@@ -158,15 +159,15 @@ export default {
     addLocationToBucketList() {
       this.snackbar = true;
       let location = {
-        name:        this.locationName || this.currentSearch,
-        rating:      this.stats.rating.value,
-        safety:      this.stats.safetyRating.value,
-        costPerDay:  this.stats.costPerDay.value,
-        imgUrls:     this.imgUrls,
+        name: this.locationName || this.currentSearch,
+        rating: this.stats.rating.value,
+        safety: this.stats.safetyRating.value,
+        costPerDay: this.stats.costPerDay.value,
+        imgUrls: this.imgUrls,
         ytVideoURLs: this.ytVideoURLs,
-        reviews:     this.reviews,
-        news:        this.newsArticles
-      }
+        reviews: this.reviews,
+        news: this.newsArticles
+      };
       store.commit(BUCKET_ADD_LOCATION, { location });
     },
 
@@ -174,13 +175,14 @@ export default {
       this.places = places;
       this.reviews = places.reviews;
       this.reviewsComponentLoading = false;
-      this.stats.rating.value = Math.round( places.rating * 10 ) / 10;
+      this.stats.rating.value = Math.round(places.rating * 10) / 10;
 
-      getCountryCode(places.location.lat, places.location.lng)
-      .then(safetyRating => {
-        this.stats.safetyRating.value = safetyRating.safetyRating
-        this.statCardComponentLoading = false
-      });
+      getCountryCode(places.location.lat, places.location.lng).then(
+        safetyRating => {
+          this.stats.safetyRating.value = safetyRating.safetyRating;
+          this.statCardComponentLoading = false;
+        }
+      );
 
       getNearbyPlaces(places.location.lat, places.location.lng)
         .then(nearbyPlaces => (this.nearbyPlaces = nearbyPlaces))
@@ -215,9 +217,9 @@ export default {
         .then(ytVideoURLs => (this.ytVideoURLs = ytVideoURLs))
         .then(() => (this.vidFeatureComponentLoading = false));
 
-      getPlacesDetails({ keyword: this.currentSearch})
-      .then(places => this.updateData(places));
-
+      getPlacesDetails({ keyword: this.currentSearch }).then(places =>
+        this.updateData(places)
+      );
     }
   }
 };

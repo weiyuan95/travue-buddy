@@ -13,7 +13,6 @@
     <v-tab-item key="images">
       <v-card flat tile>
         <keep-alive>
-          <!-- <component :is="mediaComponent.component"></component> -->
           <image-carousel :imgStrings="imgUrls" />
         </keep-alive>
       </v-card>
