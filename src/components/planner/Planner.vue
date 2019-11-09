@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <v-container class="bucket-wrapper">
+    <v-container :class="bucket.length > 0 ? 'bucket-wrapper' : 'bucket-close'">
       <h1 class="font">Bucket List</h1>
       <br>
       <draggable 
@@ -88,11 +88,18 @@ h1 {
 }
 
 .bucket-wrapper {
-  min-width: 250px;
+  width: 300px;
   max-width: 400px;
   margin: 0px 0px 0px 0px;
   background-color: rgba(255, 255, 255, 0.199);
   border-right: 3px solid rgba(89, 89, 89, 0.194);
+  transition: 0.4s;
+}
+
+.bucket-close {
+  width: 0px;
+  transition: 0.4s;
+  visibility: hidden;
 }
 
 .ghost {
