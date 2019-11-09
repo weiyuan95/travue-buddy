@@ -1,7 +1,7 @@
 <template>
-  <v-card class="main-wrapper" elevation="5">
-    <v-skeleton-loader style="height: 100%;" :loading="loading" type="card" >
-      <v-carousel height="100%" hide-delimiters>
+  <v-card elevation="5">
+    <v-skeleton-loader :loading="loading" type="card" >
+      <v-carousel hide-delimiters hide-delimiter-background>
         <v-carousel-item
           v-for="(imgString, i) in imgStrings"
           :key="i"
@@ -19,10 +19,4 @@ export default {
 </script>
 
 <style scoped>
-
-.main-wrapper {
-  height: 400px; 
-  overflow: scroll;
-}
-
 </style>

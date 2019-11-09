@@ -61,17 +61,15 @@ export default {
   methods: {
     enterSubmit: function($event) {
       if ($event.charCode == 13) {
-        
         this.submit();
       }
     },
     getAddressData: function (addressData) {
-      this.address = addressData;
       this.destination = addressData.name;
+      store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: this.destination });
     },
     submit() {
       this.$v.$touch();
-      store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: this.destination });
     }
   }
 }

@@ -1,28 +1,34 @@
 <template>
-    <v-card elevation='4'>
-        <v-card-title>{{ activity.name }} </v-card-title>
-        <v-card-subtitle> {{ activity.type }} </v-card-subtitle>
-        <v-img :aspect-ratio="16/9" max-width='350' src='https://images.unsplash.com/photo-1447501614729-24781f73c2f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2560&q=80'> </v-img>
-        <v-card-text> 
-            This is a beautiful place! <br>
-            <a href=activity.link> Check it out!</a> 
-            </v-card-text>
-    </v-card>
-
+  <v-card elevation="4">
+    <v-img
+      :aspect-ratio="16/9"
+      width="100%"
+      :src="activity.imgUrls[0]"
+    ></v-img>
+    <v-card-title class="title">
+      <span>{{ activity.name }}</span>
+      <div>
+        <v-rating dense size="12" color="yellow" :value="activity.rating" readonly/>
+      </div>
+    </v-card-title>
+    <v-card-subtitle>{{ activity.name }}</v-card-subtitle>
+  </v-card>
 </template>
 
 <script>
 export default {
-  props: ["activity"],
-
+  props: ["activity"]
 };
 </script>
 
 <style scoped>
-
 .v-card {
-    background-color: white;
-    margin-bottom: 20px;
+  background-color: white;
+  margin-bottom: 20px;
 }
 
+.title {
+  display: flex;
+  justify-content: space-between;
+}
 </style>    

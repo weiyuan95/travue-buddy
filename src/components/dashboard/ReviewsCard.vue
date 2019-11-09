@@ -1,5 +1,5 @@
 <template>
-  <v-card style="height: 400px; padding: 10px 10px 10px 10px; overflow: scroll" elevation="5">
+  <v-card style="height: 400px; padding: 10px 5px; overflow: scroll" elevation="5">
     <h1 style="padding: 15px 0px 0px 15px">Reviews</h1>
     <v-skeleton-loader :loading="loading" type="list-item-avatar-three-line" >
       <v-list v-if="reviews" three-line>

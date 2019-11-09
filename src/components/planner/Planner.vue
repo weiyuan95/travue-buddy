@@ -19,8 +19,8 @@
       <h1 class="font">Planner</h1>
       <br>
       <v-row>
-        <v-col v-for="(items, dayNum) in days" v-bind:key="dayNum">
-          <day-list class="daylist" :dayNum="dayNum" :items="items" />
+        <v-col v-for="dayNum in numDays" v-bind:key="dayNum">
+          <day-list class="daylist" :dayNum="dayNum" />
         </v-col>
       </v-row>
     </v-container>
@@ -33,26 +33,33 @@ import DayList from "./DayList";
 import ActivityCard from "./ActivityCard";
 import store from "../../store/store";
 export default {
+  name: 'Planner',
+  components: { DayList, ActivityCard, draggable },
   data() {
     return {
       isDragging: false,
       bucket: [],
+      locationsInBucket: [],
     }
   },
   mounted() {
-    store.state.bucket.forEach(activity => 
-      this.bucket.push(activity)
-    );
+    this.vuexBucket.forEach(activity => {
+      this.bucket.push(activity);
+      this.locationsInBucket.push(activity.name);
+    });
   },
-  components: { DayList, ActivityCard, draggable },
   computed: {
-
-    days() {
-      return {
-        1: [],
-        2: [],
-        3: [],
-      }
+    numDays() { return store.state.numDays || 5 },
+    vuexBucket() { return store.state.bucket }
+  },
+  watch: {
+    vuexBucket() {
+      this.vuexBucket.forEach(activity => {
+        if (!this.locationsInBucket.includes(activity.name)) { 
+          this.locationsInBucket.push(activity.name);
+          this.bucket.push(activity);
+        }
+      });
     }
   }
 }
