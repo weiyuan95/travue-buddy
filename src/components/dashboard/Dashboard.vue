@@ -14,7 +14,12 @@
       <v-row style="max-height: 600px">
         <v-col style="max-height: inherit;">
           <v-row v-resize="updateStatsToDisplay">
-            <v-col style="max-height: inherit" v-for="stat in statsToDisplay" :key="stat.id" class="pt-0">
+            <v-col
+              style="max-height: inherit"
+              v-for="stat in statsToDisplay"
+              :key="stat.id"
+              class="pt-0"
+            >
               <StatCard :loading="statCardComponentLoading" v-bind:stat="stat" />
             </v-col>
           </v-row>
@@ -148,16 +153,6 @@ export default {
       // stats data to be repopulated with data from VueX
       stats: [
         {
-          costPerDay: {
-            id: "costPerDay",
-            title: "Average Cost",
-            subtitle: "Daily",
-            value: 150, // usd,
-            icon: "mdi-currency-usd",
-            color: "amber darken-3"
-          }
-        },
-        {
           safetyRating: {
             id: "safetyRating",
             subtitle: "Lower is Safer",
@@ -175,6 +170,16 @@ export default {
             value: 4.5,
             icon: "mdi-message-draw",
             color: "indigo darken-1"
+          }
+        },
+        {
+          costPerDay: {
+            id: "costPerDay",
+            title: "Average Cost",
+            subtitle: "Daily",
+            value: 150, // usd,
+            icon: "mdi-currency-usd",
+            color: "amber darken-3"
           }
         }
       ],
