@@ -1,15 +1,11 @@
 <template>
   <v-card style="height: 100%; padding: 5px; overflow: scroll" elevation="5">
     <h1 style="padding: 15px 0px 0px 15px">News</h1>
-    <v-skeleton-loader :loading="loading" type="list-item-avatar-three-line" >
-
+    <v-skeleton-loader :loading="loading" type="list-item-avatar-three-line">
       <v-list v-if="newsArticles" three-line>
         <template v-for="(article, index) in newsArticles">
           <!-- <v-subheader v-if="article.title" :key="article.title" v-text="article.title"></v-subheader> -->
-          <v-divider
-            v-if="index > 0"
-            :key="index"
-          ></v-divider>
+          <v-divider v-if="index > 0" :key="index"></v-divider>
 
           <v-list-item :key="article.title">
             <v-list-item-avatar>
@@ -24,7 +20,6 @@
           </v-list-item>
         </template>
       </v-list>
-
     </v-skeleton-loader>
   </v-card>
 </template>
@@ -37,7 +32,7 @@ export default {
 
 <style scoped>
 .news-title {
-  font-weight: 400 !important; 
-  color: teal !important
+  font-weight: 400 !important;
+  color: teal !important;
 }
 </style>

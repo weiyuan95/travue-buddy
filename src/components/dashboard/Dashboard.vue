@@ -7,19 +7,14 @@
         </v-col>
 
         <v-col cols="5">
-          <MapCard :searchCoordinates="searchCoordinates" :markers="markers"/>
+          <MapCard :searchCoordinates="searchCoordinates" :markers="markers" />
         </v-col>
       </v-row>
 
-      <v-row style="max-height: 700px">
-        <v-col>
-          <v-row>
-            <v-col
-              :cols="Math.floor(12/Object.keys(stats).length)"
-              v-for="stat in stats"
-              :key="stat.id"
-              class="pt-0"
-            >
+      <v-row style="max-height: 600px">
+        <v-col style="max-height: inherit;">
+          <v-row v-resize="updateStatsToDisplay">
+            <v-col style="max-height: inherit" v-for="stat in statsToDisplay" :key="stat.id" class="pt-0">
               <StatCard :loading="statCardComponentLoading" v-bind:stat="stat" />
             </v-col>
           </v-row>
@@ -29,24 +24,31 @@
             </v-col>
           </v-row>
         </v-col>
+
         <v-col style="max-height: inherit">
           <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
         </v-col>
       </v-row>
 
-      <h1>Nearby Places</h1>
-      <v-row justify="center">
-        <v-col
-          :cols="Math.floor(12/nearbyPlaces.length)"
-          v-for="(place, i) in nearbyPlaces"
-          :key="i"
-        >
-          <LocationCard
-            v-on:click.native="changeCurrentSearch($event, place.name)"
-            v-bind:place="place"
-            :loading="nearByComponentLoading"
-          ></LocationCard>
-        </v-col>
+      <v-row>
+        <v-row style="width: 100%" class="pl-4">
+          <v-col>
+            <h1>Nearby Places</h1>
+          </v-col>
+        </v-row>
+        <v-row class="pl-4">
+          <v-col
+            :cols="Math.floor(12/nearbyPlaces.length)"
+            v-for="(place, i) in nearbyPlaces"
+            :key="i"
+          >
+            <LocationCard
+              v-on:click.native="changeCurrentSearch($event, place.name)"
+              v-bind:place="place"
+              :loading="nearByComponentLoading"
+            ></LocationCard>
+          </v-col>
+        </v-row>
       </v-row>
       <v-btn @click="addLocationToBucketList" color="#ff0266" dark large bottom right fab fixed>
         <v-icon>mdi-heart</v-icon>
@@ -80,7 +82,14 @@ import MapCard from "./MapCard.vue";
 
 export default {
   name: "Dashboard",
-  components: { StatCard, NewsCard, ReviewsCard, LocationCard, MediaContainer, MapCard },
+  components: {
+    StatCard,
+    NewsCard,
+    ReviewsCard,
+    LocationCard,
+    MediaContainer,
+    MapCard
+  },
   data() {
     return {
       snackbar: false,
@@ -137,36 +146,54 @@ export default {
       ],
 
       // stats data to be repopulated with data from VueX
-      stats: {
-        costPerDay: {
-          id: "costPerDay",
-          title: "Average Cost",
-          subtitle: "Daily",
-          value: 150, // usd,
-          icon: "mdi-currency-usd",
-          color: "amber darken-3"
+      stats: [
+        {
+          costPerDay: {
+            id: "costPerDay",
+            title: "Average Cost",
+            subtitle: "Daily",
+            value: 150, // usd,
+            icon: "mdi-currency-usd",
+            color: "amber darken-3"
+          }
         },
-        safetyRating: {
-          id: "safetyRating",
-          subtitle: "Lower is Safer",
-          title: "Safety Rating",
-          value: 1,
-          icon: "mdi-alert",
-          color: "red lighten-2"
+        {
+          safetyRating: {
+            id: "safetyRating",
+            subtitle: "Lower is Safer",
+            title: "Safety Rating",
+            value: 1,
+            icon: "mdi-alert",
+            color: "red lighten-2"
+          }
         },
-        rating: {
-          id: "rating",
-          subtitle: "Against 5",
-          title: "Average Review",
-          value: 4.5,
-          icon: "mdi-message-draw",
-          color: "indigo darken-1"
+        {
+          rating: {
+            id: "rating",
+            subtitle: "Against 5",
+            title: "Average Review",
+            value: 4.5,
+            icon: "mdi-message-draw",
+            color: "indigo darken-1"
+          }
         }
-      }
+      ],
+      // populated by updateStatsToDisplay based on window width
+      statsToDisplay: {}
     };
   },
 
   methods: {
+    updateStatsToDisplay() {
+      let newStatsToDisplay = {};
+      let windowWidth = window.innerWidth;
+      // adjust the number of stats to show here
+      let numOfStatsToShow = windowWidth >= 1700 ? 3 : 2;
+      for (let i = 0; i < numOfStatsToShow; i++) {
+        newStatsToDisplay = Object.assign(this.stats[i], newStatsToDisplay);
+      }
+      this.statsToDisplay = newStatsToDisplay;
+    },
     changeCurrentSearch: function(event, value) {
       console.log("clicked man");
       store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
@@ -175,9 +202,9 @@ export default {
       this.snackbar = true;
       let location = {
         name: this.locationName || this.currentSearch,
-        rating: this.stats.rating.value,
-        safety: this.stats.safetyRating.value,
-        costPerDay: this.stats.costPerDay.value,
+        rating: this.stats[2].rating.value,
+        safety: this.stats[1].safetyRating.value,
+        costPerDay: this.stats[0].costPerDay.value,
         imgUrls: this.imgUrls,
         ytVideoURLs: this.ytVideoURLs,
         reviews: this.reviews,
@@ -194,11 +221,11 @@ export default {
       this.places = places;
       this.reviews = places.reviews;
       this.reviewsComponentLoading = false;
-      this.stats.rating.value = Math.round(places.rating * 10) / 10;
+      this.stats[2].rating.value = Math.round(places.rating * 10) / 10;
 
       getCountryCode(places.location.lat, places.location.lng).then(
         safetyRating => {
-          this.stats.safetyRating.value = safetyRating.safetyRating;
+          this.stats[1].safetyRating.value = safetyRating.safetyRating;
           this.statCardComponentLoading = false;
         }
       );
@@ -240,6 +267,9 @@ export default {
         this.updateData(places)
       );
     }
+  },
+  mounted() {
+    this.updateStatsToDisplay();
   }
 };
 </script>

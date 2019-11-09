@@ -1,12 +1,12 @@
 <template>
-  <v-card :loading="loading">
-    <v-container>
-      <v-row align="center" class="py-0">
-        <v-col>
-          <v-icon class="pb-0 mb-0" :color="stat.color" size="85">{{ stat.icon }}</v-icon>
+  <v-card :loading="loading" outlined>
+    <v-container >
+      <v-row align="center" class="py-0 ">
+        <v-col cols="5">
+          <v-icon class="pb-0 mb-0" :color="stat.color" size="90">{{ stat.icon }}</v-icon>
         </v-col>
-        <v-col class="px-0 py-0" cols="7">
-          <v-card-subtitle class="pb-0 pt-0 overline">
+        <v-col class="px-0 py-0">
+          <v-card-subtitle class="pb-0 pt-0  body-2 font-weight-leight">
             <p>{{ stat.subtitle }}</p>
           </v-card-subtitle>
 
@@ -15,7 +15,7 @@
           </v-card-title>
 
           <v-card-text>
-            <p :color="stat.color" class="headline">{{ stat.value }}</p>
+            <p :color="stat.color" class="display-2">{{ stat.value }}</p>
           </v-card-text>
         </v-col>
       </v-row>

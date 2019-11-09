@@ -1,7 +1,6 @@
 <template>
   <v-tabs
     background-color="primary"
-    :icons-and-text="icons"
   >
     <v-tab key="images">
       Images
