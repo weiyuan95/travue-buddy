@@ -134,7 +134,7 @@ body {
     outline:none;
     float:left;
     padding: 0;
-    color: rgb(167, 167, 167) !important;
+    color: #2f3640 !important;
     transition: 0.4s;
     line-height: 40px;
     width: 0px;
