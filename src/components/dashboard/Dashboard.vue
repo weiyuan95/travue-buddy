@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <v-container>
       <v-row>
         <v-col cols="6">
@@ -14,20 +13,19 @@
             </v-col>
           </v-row>
           <v-row>
-            <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
+            <v-col>
+              <ReviewsCard :loading="reviewsComponentLoading" :reviews="reviews" />
+            </v-col>
           </v-row>
         </v-col>
-        <v-col cols="6">
-          <ReviewsCard :loading="reviewsComponentLoading" :reviews="reviews" />
+        <v-col>
+          <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="8">
           <MediaContainer :imgUrls="imgUrls" :ytVideoURLs="ytVideoURLs"/>
-        </v-col>
-        <v-col cols="4">
-          <NewsCard :loading="newsComponentLoading" :newsArticles="newsArticles" />
         </v-col>
       </v-row>
 
@@ -134,7 +132,7 @@ export default {
         },
         safetyRating: {
           id: "safetyRating",
-          subtitle: "Against 5 (Lower Better)",
+          subtitle: "Lower is Safer",
           title: "Safety Rating",
           value: 1,
           icon: "mdi-alert",
