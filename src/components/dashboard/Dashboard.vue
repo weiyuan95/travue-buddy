@@ -1,9 +1,13 @@
 <template>
   <div>
-    <v-container>
+    <v-container fluid>
       <v-row>
         <v-col cols="7">
           <MediaContainer :imgUrls="imgUrls" :ytVideoURLs="ytVideoURLs" />
+        </v-col>
+
+        <v-col cols="5">
+          <MapCard :searchCoordinates="searchCoordinates" :markers="markers"/>
         </v-col>
       </v-row>
 
@@ -72,10 +76,11 @@ import NewsCard from "./NewsCard.vue";
 import ReviewsCard from "./ReviewsCard.vue";
 import LocationCard from "./LocationCard.vue";
 import MediaContainer from "./MediaContainer.vue";
+import MapCard from "./MapCard.vue";
 
 export default {
   name: "Dashboard",
-  components: { StatCard, NewsCard, ReviewsCard, LocationCard, MediaContainer },
+  components: { StatCard, NewsCard, ReviewsCard, LocationCard, MediaContainer, MapCard },
   data() {
     return {
       snackbar: false,
@@ -89,6 +94,16 @@ export default {
 
       // Location data
       locationName: "",
+      searchCoordinates: {
+        lat: 0,
+        lng: 0
+      },
+      markers: [
+        {
+          lat: 1.3408906,
+          lng: 103.7724171
+        }
+      ],
       imgUrls: [],
       ytVideoURLs: [],
       newsArticles: [],
@@ -172,6 +187,10 @@ export default {
     },
 
     updateData(places) {
+      this.searchCoordinates.lat = places.location.lat;
+      this.searchCoordinates.lng = places.location.lng;
+      this.markers[0].lat = places.location.lat;
+      this.markers[0].lng = places.location.lng;
       this.places = places;
       this.reviews = places.reviews;
       this.reviewsComponentLoading = false;
