@@ -39,15 +39,28 @@ export default {
     return {
       isDragging: false,
       bucket: [],
+      locationsInBucket: [],
     }
   },
   mounted() {
-    store.state.bucket.forEach(activity => 
-      this.bucket.push(activity)
-    );
+    this.vuexBucket.forEach(activity => {
+      this.bucket.push(activity);
+      this.locationsInBucket.push(activity.name);
+    });
   },
   computed: {
-    numDays() { return store.state.numDays || 5 }
+    numDays() { return store.state.numDays || 5 },
+    vuexBucket() { return store.state.bucket }
+  },
+  watch: {
+    vuexBucket() {
+      this.vuexBucket.forEach(activity => {
+        if (!this.locationsInBucket.includes(activity.name)) { 
+          this.locationsInBucket.push(activity.name);
+          this.bucket.push(activity);
+        }
+      });
+    }
   }
 }
 </script>

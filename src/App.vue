@@ -47,7 +47,7 @@
 
     <v-content>
       <v-container fluid class="pa-0 ma-0">
-        <keep-alive :include="['Dashboard', 'Planner']">
+        <keep-alive>
           <router-view />
         </keep-alive>
       </v-container>
