@@ -193,7 +193,7 @@ export default {
       let newStatsToDisplay = {};
       let windowWidth = window.innerWidth;
       // adjust the number of stats to show here
-      let numOfStatsToShow = windowWidth >= 1700 ? 3 : 2;
+      let numOfStatsToShow = windowWidth >= 1750 ? 3 : 2;
       for (let i = 0; i < numOfStatsToShow; i++) {
         newStatsToDisplay = Object.assign(this.stats[i], newStatsToDisplay);
       }
