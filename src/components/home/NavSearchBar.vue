@@ -8,7 +8,11 @@
       close-delay="50"
     >
       <v-card style="width: 400px; height: 40px" :elevation="hover ? 12 : 3">
-        <input style="padding-left: 10px; width: 400px; height: 40px" id="map" type="text" v-model="destination" @keypress="enterSubmit($event)">
+        <input style="padding-left: 10px; width: 400px; height: 40px" 
+        id="map" 
+        type="text"
+        v-model="locationSearch" 
+        @keypress="enterSubmit($event)">
           <vuetify-google-autocomplete
           id="map"
           refer="places"
@@ -33,31 +37,13 @@
 <script>
 import store from "../../store/store";
 import { CHANGE_CURRENT_SEARCH } from "../../store/mutation-types";
-import { required } from "vuelidate/lib/validators";
 
-
+/* eslint-disable no-console */
 export default {
 
   data: () => ({
-      destination: ""
     }),
-
-  validations: {
-      destination: { required }
-    },
-
-  computed: {
-    destinationErrors() {
-      const errors = [];
-      if (!this.$v.destination.$dirty) {
-        return errors;
-      }
-      !this.$v.destination.required &&
-        errors.push("Please enter your destination");
-      return errors;
-    }
-  },
-
+  props: ["locationSearch"],
   methods: {
     enterSubmit: function($event) {
       if ($event.charCode == 13) {
@@ -65,8 +51,7 @@ export default {
       }
     },
     getAddressData: function (addressData) {
-      this.destination = addressData.name;
-      store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: this.destination });
+      store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: addressData.name });
     },
     submit() {
       this.$v.$touch();

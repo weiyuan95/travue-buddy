@@ -36,10 +36,10 @@
         <v-col>
           <v-app-bar-nav-icon color="white" @click.stop="drawer = !drawer" />
         </v-col>
-        <v-spacer></v-spacer>
+        <!-- <v-spacer></v-spacer> -->
         <v-col class="d-flex align-end flex-column" style="padding-right:5px;">
           <v-toolbar-items v-if="isNotHomePage">
-            <NavSearchBar/>
+            <NavSearchBar :locationSearch="locationSearch"/>
           </v-toolbar-items>
         </v-col>
       </v-row>
@@ -74,19 +74,29 @@ export default {
     goDark: false,
     test: null,
     routes,
-    router
+    router,
+    locationSearch: "",
   }),
   methods: {
     changeCurrentSearch: function(value) {
       store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
     }
   },
+
   watch: {
+    currentSearch() {
+      this.locationSearch = store.state.currentSearch;
+    },
+
     goDark: function(newVal) {
       this.$vuetify.theme.dark = newVal;
     }
   },
+
   computed: {
+    currentSearch() {
+      return store.state.currentSearch;
+    },
     isNotHomePage: function() {
       return this.router.currentRoute.path !== "/";
     },
