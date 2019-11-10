@@ -14,7 +14,9 @@
 
             <v-list-item-content>
               <v-list-item-title v-html="article.source"></v-list-item-title>
-              <v-list-item-subtitle class="news-title" v-html="'<b>' + article.title + '</b>'"></v-list-item-subtitle>
+              <v-list-item-subtitle class="news-title">
+                <b><a :href="article.url" target="_blank" >{{ article.title }} </a></b>
+              </v-list-item-subtitle>
               <v-list-item-subtitle v-html="article.description"></v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -31,8 +33,14 @@ export default {
 </script>
 
 <style scoped>
-.news-title {
-  font-weight: 400 !important;
-  color: teal !important;
-}
+  .news-title {
+    font-weight: 400 !important;
+    color: teal !important;
+    text-decoration: none;
+  }
+  a {
+    font-weight: inherit !important;
+    color: inherit !important;
+    text-decoration: none;
+  }
 </style>
