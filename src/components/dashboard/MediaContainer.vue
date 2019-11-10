@@ -1,11 +1,12 @@
 <template>
   <v-tabs
     background-color="primary"
+    :dark="true"
   >
-    <v-tab key="images">
+    <v-tab key="images" class="v-tab-text">
       Images
     </v-tab>
-    <v-tab key="videos">
+    <v-tab key="videos" class="v-tab-text">
       Videos
     </v-tab>
 
@@ -50,5 +51,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>

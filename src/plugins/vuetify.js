@@ -12,7 +12,7 @@ export default new Vuetify({
     themes: {
       light: {
         primary: colors.blue.darken4,
-        secondary: colors.red.lighten,
+        secondary: colors.blue.lighten,
       },
       dark: {
         primary: '#bb86fc',

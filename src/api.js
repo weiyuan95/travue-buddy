@@ -4,7 +4,7 @@ const unsplashAPIKey = process.env.VUE_APP_UNSPLASH_API_KEY;
 const youtubeAPIkey = process.env.VUE_APP_YOUTUBE_API_KEY;
 const fourSquareAPIKey = process.env.VUE_APP_FOURSQUARE_API_KEY;
 const fourSquareApiSecret = process.env.VUE_APP_FOURSQUARE_SECRET;
-const weatherAPIKey = process.env.VUE_WEATHER_API_KEY;
+const weatherAPIKey = process.env.VUE_APP_WEATHER_API_KEY;
 
 /* eslint-disable no-console */
 export async function getAllNews({ keyword }) {
@@ -23,25 +23,27 @@ export async function getAllNews({ keyword }) {
   return articles;
 }
 
+
 export async function getWeather(lat, lng) {
 
   function titleCase(string) {
     var sentence = string.toLowerCase().split(" ");
     for(var i = 0; i< sentence.length; i++){
-       sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
+      sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
     }
-    document.write(sentence.join(" "));
+    sentence = sentence.join(" ");
     return sentence;
   }
-  
-  const weatherAPIURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${weatherAPIKey}`
 
+  const weatherAPIURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${weatherAPIKey}`
   let response = await fetch(weatherAPIURL);
   response = await response.json();
-
+  
+  let weatherObject = response.weather[0]
   let weatherDetails = {
-    description: titleCase(response.weather.description),
-    temperature: ( response.main.temp - 32 ) * 5/9
+    description : titleCase(weatherObject.description),
+    iconUrl : `http://openweathermap.org/img/wn/${weatherObject.icon}.png`,
+    temperature : (Math.round((response.main.temp - 273.15) * 100) / 100).toFixed(1) + "°C"
   }
 
   return weatherDetails
@@ -113,7 +115,9 @@ export async function getVideos({ keyword }) {
     flattenedData.push(videoUrl);
   }  
 
-  return flattenedData;
+  console.log(">>> flattenedData", flattenedData)
+
+  return flattenedData.length != 0 ? flattenedData : ["https://www.youtube.com/embed/H-0RHqDWcJE"];
 }
 
 

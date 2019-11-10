@@ -3,10 +3,19 @@
     <v-container >
       <v-row align="center" class="py-0 " >
         <v-col cols="5">
-          <v-icon class="pb-0 mb-0" :color="stat.color" size="90">{{ stat.icon }}</v-icon>
+          <v-icon v-if="stat.icon" class="pl-5 pb-0 mb-0" :color="stat.color" size="90">
+            {{ stat.icon }}
+          </v-icon>
+          <v-img
+            v-if="stat.iconUrl"
+            :src="stat.iconUrl"
+            class="iconImg px-0"
+            width=130
+            max-width=200
+          ></v-img>
         </v-col>
         <v-col class="px-0 py-0">
-          <v-card-subtitle class="pb-0 pt-0 body-2">
+          <v-card-subtitle class="pb-0 pt-3 body-2">
             {{ stat.subtitle }}
           </v-card-subtitle>
 
@@ -38,5 +47,12 @@ export default {
 <style scoped>
   .debug {
     border: 1px solid red;
+  }
+
+  .iconImg {
+    max-height: 100px;
+    height: 90px;
+    -webkit-filter: drop-shadow(3px 3px 3px #222);
+    filter: drop-shadow(3px 3px 3px #222);
   }
 </style>

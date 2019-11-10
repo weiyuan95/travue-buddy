@@ -77,6 +77,7 @@ import { getPhotos } from "../../api";
 import { getVideos } from "../../api";
 import { getNearbyPlaces } from "../../api";
 import { CHANGE_CURRENT_SEARCH } from "../../store/mutation-types";
+import { getWeather } from "../../api";
 
 import StatCard from "./StatCard.vue";
 import NewsCard from "./NewsCard.vue";
@@ -173,12 +174,12 @@ export default {
           }
         },
         {
-          costPerDay: {
-            id: "costPerDay",
-            title: "Average Cost",
-            subtitle: "Daily",
-            value: 150, // usd,
-            icon: "mdi-currency-usd",
+          weather: {
+            id: "weather",
+            title: "Cloudy",
+            subtitle: "Weather",
+            value: "36.7°C", // usd,
+            iconUrl: "http://openweathermap.org/img/wn/10d@2x.png",
             color: "amber darken-3"
           }
         }
@@ -200,16 +201,16 @@ export default {
       this.statsToDisplay = newStatsToDisplay;
     },
     changeCurrentSearch: function(event, value) {
-      console.log("clicked man");
       store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
     },
+
     addLocationToBucketList() {
       this.snackbar = true;
       let location = {
         name: this.locationName || this.currentSearch,
         rating: this.stats[1].rating.value,
         safety: this.stats[0].safetyRating.value,
-        costPerDay: this.stats[2].costPerDay.value,
+        weather: this.stats[2].weather.value,
         imgUrls: this.imgUrls,
         ytVideoURLs: this.ytVideoURLs,
         reviews: this.reviews,
@@ -227,6 +228,14 @@ export default {
       this.reviews = places.reviews;
       this.reviewsComponentLoading = false;
       this.stats[1].rating.value = Math.round(places.rating * 10) / 10;
+
+      getWeather(places.location.lat, places.location.lng).then(
+        weatherDetails => {
+          this.stats[2].weather.value = weatherDetails.temperature,
+          this.stats[2].weather.iconUrl = weatherDetails.iconUrl,
+          this.stats[2].weather.title = weatherDetails.description
+        }
+      );
 
       getCountryCode(places.location.lat, places.location.lng).then(
         safetyRating => {

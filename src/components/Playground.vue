@@ -18,12 +18,10 @@
 <script>
 import store from "../store/store";
 import { BUCKET_ADD_LOCATION, BUCKET_REMOVE_LOCATION } from "../store/mutation-types";
-import WeatherCard from "./WeatherCard"
 import MapCard from "./dashboard/MapCard.vue";
 
 export default {
   components : {
-    WeatherCard,
     MapCard
   },
   data() {
