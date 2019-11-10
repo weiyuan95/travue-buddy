@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <v-container :class="bucket.length > 0 ? 'bucket-wrapper' : 'bucket-close'">
-      <h1 class="font">Bucket List</h1>
+      <h1 class="font pt-10">Bucket List</h1>
       <br>
       <draggable 
       v-model="bucket"
@@ -84,7 +84,7 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 10px;
   font-size: 2rem;
-  color: rgba(255, 255, 255, 0.493);
+  color: rgba(255, 255, 255, 0.60);
 }
 
 .bucket-wrapper {

@@ -90,6 +90,10 @@ export default {
 
     goDark: function(newVal) {
       this.$vuetify.theme.dark = newVal;
+    },
+
+    isNotHomePage() {
+      this.isNotHomePage();
     }
   },
 
@@ -98,7 +102,7 @@ export default {
       return store.state.currentSearch;
     },
     isNotHomePage: function() {
-      return this.router.currentRoute.path !== "/";
+      return this.router.currentRoute.path !== "/" && this.router.currentRoute.path !== "/planner";
     },
     homePageColor: function() {
       return this.isNotHomePage ? "primary" : "transparent";
