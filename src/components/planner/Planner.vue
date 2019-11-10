@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <v-container :class="bucket.length > 0 ? 'bucket-wrapper' : 'bucket-close'">
-      <h1 class="font pt-10">Bucket List</h1>
+      <h1 v-if="bucket.length > 0" class="font">Bucket List</h1>
       <br>
       <draggable 
       v-model="bucket"
