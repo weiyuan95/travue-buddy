@@ -6,8 +6,8 @@
           <v-icon class="pb-0 mb-0" :color="stat.color" size="90">{{ stat.icon }}</v-icon>
         </v-col>
         <v-col class="px-0 py-0">
-          <v-card-subtitle class="pb-0 pt-0  body-2 font-weight-leight">
-            <p>{{ stat.subtitle }}</p>
+          <v-card-subtitle class="pb-0 pt-0 body-2">
+            {{ stat.subtitle }}
           </v-card-subtitle>
 
           <v-card-title class="pb-0 pt-0 mb-0 title">
