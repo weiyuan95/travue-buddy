@@ -74,6 +74,7 @@ h1 {
 
 .main {
   display: flex;
+  justify-content: space-evenly;
   height: 100vh;
   background-image: url("https://images.unsplash.com/photo-1521086248378-5fe2b23c8b23?ixlib=rb-1.2.1&auto=format&fit=crop&w=2850&q=80");
   background-size: cover;
@@ -98,8 +99,13 @@ h1 {
 
 .bucket-close {
   width: 0px;
-  transition: 0.4s;
+  padding: 0px;
+  margin: 0px;
   visibility: hidden;
+  transition: 0.4s;
+}
+
+.day-list-wrapper {
 }
 
 .ghost {

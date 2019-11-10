@@ -41,9 +41,12 @@ import { CHANGE_CURRENT_SEARCH } from "../../store/mutation-types";
 /* eslint-disable no-console */
 export default {
 
-  data: () => ({
-    }),
-  props: ["locationSearch"],
+  data: () => ({ locationSearch: "" }),
+  
+  mounted() { 
+    this.locationSearch = store.state.currentSearch;
+  },
+
   methods: {
     enterSubmit: function($event) {
       if ($event.charCode == 13) {
@@ -54,8 +57,16 @@ export default {
       store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: addressData.name });
     },
     submit() {
-      this.$v.$touch();
+      // this.$v.$touch();
     }
+  },
+
+  computed: {
+    currentSearch() { return store.state.currentSearch }
+  },
+
+  watch: {
+    currentSearch() { this.locationSearch = this.currentSearch }
   }
 }
 </script>

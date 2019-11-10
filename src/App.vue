@@ -39,7 +39,7 @@
         <!-- <v-spacer></v-spacer> -->
         <v-col class="d-flex align-end flex-column" style="padding-right:5px;">
           <v-toolbar-items v-if="isNotHomePage">
-            <NavSearchBar :locationSearch="locationSearch"/>
+            <NavSearchBar/>
           </v-toolbar-items>
         </v-col>
       </v-row>
@@ -61,7 +61,6 @@
 import { routes } from "./routes.js";
 import router from "./routes.js";
 import store from "./store/store";
-import { CHANGE_CURRENT_SEARCH } from "./store/mutation-types";
 import NavSearchBar from "./components/home/NavSearchBar.vue";
 
 export default {
@@ -75,18 +74,9 @@ export default {
     test: null,
     routes,
     router,
-    locationSearch: "",
   }),
-  methods: {
-    changeCurrentSearch: function(value) {
-      store.commit(CHANGE_CURRENT_SEARCH, { newSearchString: value });
-    }
-  },
 
   watch: {
-    currentSearch() {
-      this.locationSearch = store.state.currentSearch;
-    },
 
     goDark: function(newVal) {
       this.$vuetify.theme.dark = newVal;
