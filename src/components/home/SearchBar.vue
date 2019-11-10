@@ -135,7 +135,7 @@ body {
     float:left;
     padding: 0;
     color: #2f3640 !important;
-    transition: 0.4s;
+    transition: 800s;
     line-height: 40px;
     width: 0px;
     align-items: stretch;
