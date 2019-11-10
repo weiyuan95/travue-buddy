@@ -207,9 +207,9 @@ export default {
       this.snackbar = true;
       let location = {
         name: this.locationName || this.currentSearch,
-        rating: this.stats[2].rating.value,
-        safety: this.stats[1].safetyRating.value,
-        costPerDay: this.stats[0].costPerDay.value,
+        rating: this.stats[1].rating.value,
+        safety: this.stats[0].safetyRating.value,
+        costPerDay: this.stats[2].costPerDay.value,
         imgUrls: this.imgUrls,
         ytVideoURLs: this.ytVideoURLs,
         reviews: this.reviews,
@@ -226,11 +226,11 @@ export default {
       this.places = places;
       this.reviews = places.reviews;
       this.reviewsComponentLoading = false;
-      this.stats[2].rating.value = Math.round(places.rating * 10) / 10;
+      this.stats[1].rating.value = Math.round(places.rating * 10) / 10;
 
       getCountryCode(places.location.lat, places.location.lng).then(
         safetyRating => {
-          this.stats[1].safetyRating.value = safetyRating.safetyRating;
+          this.stats[0].safetyRating.value = safetyRating.safetyRating;
           this.statCardComponentLoading = false;
         }
       );
