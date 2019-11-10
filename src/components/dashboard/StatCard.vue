@@ -1,7 +1,7 @@
 <template>
-  <v-card :loading="loading" outlined>
+  <v-card :loading="loading" elevation="5">
     <v-container >
-      <v-row align="center" class="py-0 ">
+      <v-row align="center" class="py-0 " >
         <v-col cols="5">
           <v-icon class="pb-0 mb-0" :color="stat.color" size="90">{{ stat.icon }}</v-icon>
         </v-col>
