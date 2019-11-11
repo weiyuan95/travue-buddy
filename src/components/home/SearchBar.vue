@@ -7,7 +7,7 @@
         <vuetify-google-autocomplete
         id="map"
         refer="places"
-        placeholder="Where do you want to go?"
+        placeholder="Enter a Place of Interest"
         v-on:placechanged="getAddressData"
         types="establishment"
         >

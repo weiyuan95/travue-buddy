@@ -1,12 +1,32 @@
 <template>
   <div>
     <v-container class='board'>
-      <h2>Day {{ dayNum }}</h2>
+      <v-row justify="center">
+        <v-col cols="7">
+          <h2>Day {{ dayNum }}</h2>
+        </v-col>
+        <v-col cols="2">
+          <v-dialog
+          v-model="dialog"
+          width="1000px">
+          <template v-slot:activator=" { on }">
+            <v-btn
+              color="blue darken-2"
+              dark
+              v-on="on">
+              Plot
+            </v-btn>
+          </template>
+          <PlotMap v-if="markers && markers.length > 0" :markers="markers"/>
+          </v-dialog>
+        </v-col>
+      </v-row>
       <v-divider style='padding:10px;' ></v-divider>
       <draggable
         v-model="activities"
         tag="activity-card"
         group="events"
+
         @start="isDragging=true"
         @end="isDragging=false"
         :empty-insert-threshold="200"
@@ -23,16 +43,24 @@
 <script>
 import draggable from "vuedraggable";
 import ActivityCard from "./ActivityCard.vue";
+import PlotMap from "./PlotMap.vue";
+
 export default {
   name: "DayList",
   props: ["dayNum"],
-  components: { ActivityCard, draggable },
+  components: { ActivityCard, draggable, PlotMap },
   data() {
     return {
+      dialog: false,
       isDragging: false,
       activities: [],
     };
   },
+  computed: {
+      markers() {
+        return this.activities && this.activities.map(activity => ({ lat: activity.coordinates.lat, lng: activity.coordinates.lng }))
+    }
+  }
 };
 </script>
 

@@ -214,7 +214,8 @@ export default {
         imgUrls: this.imgUrls,
         ytVideoURLs: this.ytVideoURLs,
         reviews: this.reviews,
-        news: this.newsArticles
+        news: this.newsArticles,
+        coordinates: {...this.searchCoordinates}
       };
       store.commit(BUCKET_ADD_LOCATION, { location });
     },

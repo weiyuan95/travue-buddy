@@ -1,7 +1,7 @@
 <template>
   <!-- we should figure out how to prefetch the image, it's 3mb -->
   <v-container class="home-container" fluid>
-    <v-col class="offset-md-3 mt-12 text-center display-3 white-text-header font-weight-black" sm="6">TravelVue</v-col>
+    <v-col class="offset-md-3 mt-12 text-center display-3 white-text-header font-weight-black" sm="6">TraVue</v-col>
     <v-col class="offset-md-3 text-center headline font-weight-bold white-text" sm="6">Travel Information made Easy.</v-col>
     <v-col class="offset-md-3" sm="6">
       <v-row align="center">
