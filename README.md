@@ -27,7 +27,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Neccesary API Keys
 #### Store in project root as ".env" file
 Neccesary Keys
-
+```
 VUE_APP_OPEN_CAGE_API_KEY=
 VUE_APP_NEWS_API_KEY=
 VUE_APP_UNSPLASH_API_KEY=
@@ -36,4 +36,4 @@ VUE_APP_GOOGLE_API_KEY=
 VUE_APP_FOURSQUARE_API_KEY=
 VUE_APP_FOURSQUARE_SECRET=
 VUE_APP_WEATHER_API_KEY=
-
+```
