@@ -49,6 +49,7 @@ export async function getWeather(lat, lng) {
 }
 
 export async function getNearbyPlaces(lat, lng) {
+    console.log(">>> NEARBY PLACES!!!!", lat, lng);
     let rightNow = new Date();
     let dateStr = rightNow
         .toISOString()
@@ -148,6 +149,7 @@ export async function getPhotos({ keyword }) {
 }
 
 export async function getPlacesDetails({ keyword }) {
+    console.log(">>> GETTING DETAILS", keyword);
     let splitKeyword = keyword.split(" ");
     let joinedKeyword = splitKeyword.join("%20");
 
